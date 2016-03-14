@@ -36,6 +36,13 @@ public class menuJPanel extends JPanel implements ActionListener
         bScores.setText("High Scores");
         bCredits.setText("Credits");
         
+        //Add Listeners
+        bGame.addActionListener(this);
+        bOptions.addActionListener(this);
+        bInst.addActionListener(this);
+        bScores.addActionListener(this);
+        bCredits.addActionListener(this);
+        
         //Add Buttons, setting gridbaglayout constraints
         c.gridx = 0;
         c.gridy = 0;
@@ -51,11 +58,24 @@ public class menuJPanel extends JPanel implements ActionListener
         c.gridy=5;
         add(bScores, c);
         c.gridy=6;
-        add(bCredits, c);        
+        add(bCredits, c);
+
+        //Initialize Panels
+        instP = new instJPanel();
+        scoresP = new scoresJPanel();
+        creditsP = new creditsJPanel();
+        optionsP = new optionsJPanel();
+        gameP = new gameJPanel();
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void actionPerformed(ActionEvent event) {
+        Object obj = event.getSource();
+        if (obj == bGame){
+           removeAll();
+           setLayout(new BorderLayout()); 
+           add(gameP, "Center");
+           updateUI();
+        }
     }
 }
