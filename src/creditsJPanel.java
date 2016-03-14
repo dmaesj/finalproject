@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class scoresJPanel extends JPanel {
-    scoresJPanel ()
+public class creditsJPanel extends JPanel {
+    creditsJPanel ()
     {
         super();
     }
