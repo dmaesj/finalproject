@@ -1,15 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class menuJPanel extends JPanel implements ActionListener
+public class menuJPanel extends JPanel 
 {
-    instJPanel instP;
-    scoresJPanel scoresP;
-    creditsJPanel creditsP;
-    optionsJPanel optionsP;
-    gameJPanel gameP;
     JButton bLabel, bGame, bInst, bScores, bCredits, bOptions;
     public menuJPanel ()
     {
@@ -36,13 +29,6 @@ public class menuJPanel extends JPanel implements ActionListener
         bScores.setText("High Scores");
         bCredits.setText("Credits");
         
-        //Add Listeners
-        bGame.addActionListener(this);
-        bOptions.addActionListener(this);
-        bInst.addActionListener(this);
-        bScores.addActionListener(this);
-        bCredits.addActionListener(this);
-        
         //Add Buttons, setting gridbaglayout constraints
         c.gridx = 0;
         c.gridy = 0;
@@ -59,23 +45,5 @@ public class menuJPanel extends JPanel implements ActionListener
         add(bScores, c);
         c.gridy=6;
         add(bCredits, c);
-
-        //Initialize Panels
-        instP = new instJPanel();
-        scoresP = new scoresJPanel();
-        creditsP = new creditsJPanel();
-        optionsP = new optionsJPanel();
-        gameP = new gameJPanel();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent event) {
-        Object obj = event.getSource();
-        if (obj == bGame){
-           removeAll();
-           setLayout(new BorderLayout()); 
-           add(gameP, "Center");
-           updateUI();
-        }
     }
 }

@@ -8,7 +8,7 @@ public class mainJFrame extends JFrame
 		super ("Berkey Creamery");
 		
 
-  	 	menuJPanel mPanel = new menuJPanel();
+  	 	mainJPanel mPanel = new mainJPanel();
     
     	
     	
