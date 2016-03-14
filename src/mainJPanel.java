@@ -44,15 +44,44 @@ public class mainJPanel extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent event) {
         Object obj = event.getSource();
-        if (obj == menuP.bGame){
-           menuP.setVisible(false);
-           mBarP.setVisible(true);
-           add(gameP, "Center");
-           updateUI();
-        }
         if (obj == mBarP.bReturn) {
             mBarP.setVisible(false);
             menuP.setVisible(true);
+            gameP.setVisible(false);
+            instP.setVisible(false);
+            scoresP.setVisible(false);
+            creditsP.setVisible(false);
+            optionsP.setVisible(false);
+        }
+          if (obj == menuP.bGame){
+           menuP.setVisible(false);
+           mBarP.setVisible(true);
+           add(gameP, "Center");
+           gameP.setVisible(true);
+        }
+        if (obj == menuP.bInst){
+           menuP.setVisible(false);
+           mBarP.setVisible(true);
+           add(instP, "Center");
+           instP.setVisible(true);
+        }
+        if (obj == menuP.bCredits){
+           menuP.setVisible(false);
+           mBarP.setVisible(true);
+           add(creditsP, "Center");
+           creditsP.setVisible(true);
+        }
+         if (obj == menuP.bOptions){
+           menuP.setVisible(false);
+           mBarP.setVisible(true);
+           add(optionsP, "Center");
+           optionsP.setVisible(true);
+        }
+         if (obj == menuP.bScores){
+           menuP.setVisible(false);
+           mBarP.setVisible(true);
+           add(scoresP, "Center");
+           scoresP.setVisible(true);
         }
     }
 }

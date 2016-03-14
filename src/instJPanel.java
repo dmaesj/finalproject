@@ -2,8 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class instJPanel extends JPanel {
-    instJPanel ()
+    
+    JButton bTemp;
+    public instJPanel ()
     {
         super();
+        JButton bTemp;
+        bTemp = new JButton();
+        bTemp.setText("Instructions Panel");
+        add(bTemp);
     }
 }

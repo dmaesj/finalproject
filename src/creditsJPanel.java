@@ -2,8 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class creditsJPanel extends JPanel {
-    creditsJPanel ()
+    
+    JButton bTemp;
+    public creditsJPanel ()
     {
         super();
+        bTemp = new JButton();
+        bTemp.setText("Credits Panel");
+        add(bTemp);
     }
 }

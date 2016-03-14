@@ -5,11 +5,10 @@ import java.awt.event.ActionListener;
 
 public class gameJPanel extends JPanel
 {
-   
+    JButton bTemp;
     public gameJPanel ()
     {   
         super();
-        JButton bTemp;
         bTemp = new JButton();
         bTemp.setText("Game Panel");
         add(bTemp);
