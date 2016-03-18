@@ -16,7 +16,8 @@ public class mainJFrame extends JFrame
 		
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize (640, 480);
+		setSize (960, 720);
+                setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
