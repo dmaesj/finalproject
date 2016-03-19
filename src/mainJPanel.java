@@ -18,13 +18,14 @@ public class mainJPanel extends JPanel implements ActionListener
         setLayout(new BorderLayout());
         
         //Initialize Panels
-        mBarP = new menuBarJPanel();
+        
         instP = new instJPanel();
         scoresP = new scoresJPanel();
         creditsP = new creditsJPanel();
         optionsP = new optionsJPanel();
         gameP = new gameJPanel();
         menuP = new menuJPanel();
+        mBarP = new menuBarJPanel(gameP);
         
         //Add Listeners
         menuP.bGame.addActionListener(this);
@@ -56,30 +57,35 @@ public class mainJPanel extends JPanel implements ActionListener
           if (obj == menuP.bGame){
            menuP.setVisible(false);
            mBarP.setVisible(true);
+           mBarP.setGameStatus(1);
            add(gameP, "Center");
            gameP.setVisible(true);
         }
         if (obj == menuP.bInst){
            menuP.setVisible(false);
            mBarP.setVisible(true);
+           mBarP.setGameStatus(0);
            add(instP, "Center");
            instP.setVisible(true);
         }
         if (obj == menuP.bCredits){
            menuP.setVisible(false);
            mBarP.setVisible(true);
+           mBarP.setGameStatus(0);
            add(creditsP, "Center");
            creditsP.setVisible(true);
         }
          if (obj == menuP.bOptions){
            menuP.setVisible(false);
            mBarP.setVisible(true);
+           mBarP.setGameStatus(0);
            add(optionsP, "Center");
            optionsP.setVisible(true);
         }
          if (obj == menuP.bScores){
            menuP.setVisible(false);
            mBarP.setVisible(true);
+           mBarP.setGameStatus(0);
            add(scoresP, "Center");
            scoresP.setVisible(true);
         }

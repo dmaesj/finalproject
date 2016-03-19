@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 public class gameJPanel extends JPanel
 {
+    private boolean gameStatePaused = false;
     JButton bTemp;
     public gameJPanel ()
     {   
@@ -12,5 +13,11 @@ public class gameJPanel extends JPanel
         bTemp = new JButton();
         bTemp.setText("Game Panel");
         add(bTemp);
+    }
+    public void setGamePaused(boolean paused) {
+        gameStatePaused = paused;
+    }
+    public boolean getGameState() {
+        return gameStatePaused;
     }
 }

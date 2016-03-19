@@ -3,7 +3,8 @@ import java.awt.*;
 
 public class menuJPanel extends JPanel 
 {
-    JButton bLabel, bGame, bInst, bScores, bCredits, bOptions;
+    JButton bLabel, bGame, bInst, bScores, bCredits, bOptions, bLion;
+    ImageIcon iLabel, iGame, iInst, iScores, iCredits, iOptions, iLion;
     public menuJPanel ()
     {
         super();
@@ -13,21 +14,51 @@ public class menuJPanel extends JPanel
         c.gridy = 0;
         c.ipady = 10;
         
-        //Initialize Buttons
+        //Initialize Buttons and Icons
         bLabel = new JButton();
         bGame = new JButton();
         bOptions = new JButton();
         bInst = new JButton();
         bScores = new JButton();
         bCredits = new JButton();
+        bLion = new JButton ();
         
-        //Set Button Text
-        bLabel.setText("Nittany Creamery");
-        bGame.setText("Start");
-        bOptions.setText("Options");
-        bInst.setText("Instructions");
-        bScores.setText("High Scores");
-        bCredits.setText("Credits");
+        iLabel = new ImageIcon("images/menuP/iLabel.png");
+        iGame = new ImageIcon("images/menuP/iGame.png");
+        iInst = new ImageIcon("images/menuP/iInst.png");
+        iScores = new ImageIcon("images/menuP/iScores.png");
+        iCredits = new ImageIcon("images/menuP/iCredits.png");
+        iOptions = new ImageIcon("images/menuP/iOptions.png");
+        iLion = new ImageIcon("images/menuP/iLionSmall.png");
+        
+        // Add ImageIcons to buttons and set border and button fill as invisible
+        bLabel.setIcon(iLabel);
+        bLabel.setBorderPainted(false);
+        bLabel.setContentAreaFilled(false);
+        
+        bGame.setIcon(iGame);
+        bGame.setBorderPainted(false);
+        bGame.setContentAreaFilled(false);
+        
+        bInst.setIcon(iInst);
+        bInst.setBorderPainted(false);
+        bInst.setContentAreaFilled(false);
+        
+        bScores.setIcon(iScores);
+        bScores.setBorderPainted(false);
+        bScores.setContentAreaFilled(false);
+        
+        bCredits.setIcon(iCredits);
+        bCredits.setBorderPainted(false);
+        bCredits.setContentAreaFilled(false);
+        
+        bOptions.setIcon(iOptions);
+        bOptions.setBorderPainted(false);
+        bOptions.setContentAreaFilled(false);
+        
+        bLion.setIcon(iLion);
+        bLion.setBorderPainted(false);
+        bLion.setContentAreaFilled(false);
         
         //Add Buttons, setting gridbaglayout constraints
         c.gridx = 0;
@@ -45,5 +76,9 @@ public class menuJPanel extends JPanel
         add(bScores, c);
         c.gridy=6;
         add(bCredits, c);
+        c.gridy=7;
+        c.gridx=10;
+        c.anchor= GridBagConstraints.SOUTHEAST;
+        add(bLion, c);
     }
 }
