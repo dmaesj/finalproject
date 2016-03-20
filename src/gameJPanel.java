@@ -14,6 +14,7 @@ public class gameJPanel extends JPanel
         bTemp = new JButton();
         bTemp.setText("Game Panel");
         add(bTemp);
+        System.out.println("game constructed");
     }
     // Pauses or resumes game loop
     public void setGamePaused(boolean ispaused) {

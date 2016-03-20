@@ -25,7 +25,7 @@ public class mainJPanel extends JPanel implements ActionListener
         optionsP = new optionsJPanel();
         gameP = new gameJPanel();
         menuP = new menuJPanel();
-        mBarP = new menuBarJPanel(gameP);
+        mBarP = new menuBarJPanel(gameP, optionsP);
         
         //Add Listeners
         menuP.bGame.addActionListener(this);
@@ -36,10 +36,20 @@ public class mainJPanel extends JPanel implements ActionListener
         
         mBarP.bReturn.addActionListener(this);
         
-        //Add Top Bar
-        add(menuP, "Center");
+        //Add panels
         add(mBarP, "North");
         mBarP.setVisible(false);
+        add(gameP, "Center");
+        gameP.setVisible(false);
+        add(instP, "Center");
+        instP.setVisible(false);
+        add(creditsP, "Center");
+        creditsP.setVisible(false);
+        add(optionsP, "Center");
+        optionsP.setVisible(false);
+        add(scoresP, "Center");
+        scoresP.setVisible(false);
+        add(menuP, "Center");
     }
 
     @Override
@@ -57,36 +67,34 @@ public class mainJPanel extends JPanel implements ActionListener
           if (obj == menuP.bGame){
            menuP.setVisible(false);
            mBarP.setVisible(true);
-           mBarP.setGameStatus(1);
-           add(gameP, "Center");
+           mBarP.setVisButtons(0);
+           mBarP.setVisButtons(1);
            gameP.setVisible(true);
         }
         if (obj == menuP.bInst){
            menuP.setVisible(false);
            mBarP.setVisible(true);
-           mBarP.setGameStatus(0);
-           add(instP, "Center");
+           mBarP.setVisButtons(0);
            instP.setVisible(true);
         }
         if (obj == menuP.bCredits){
            menuP.setVisible(false);
            mBarP.setVisible(true);
-           mBarP.setGameStatus(0);
-           add(creditsP, "Center");
+           mBarP.setVisButtons(0);
            creditsP.setVisible(true);
         }
          if (obj == menuP.bOptions){
            menuP.setVisible(false);
            mBarP.setVisible(true);
-           mBarP.setGameStatus(0);
-           add(optionsP, "Center");
+           mBarP.setVisButtons(0);
+           mBarP.setVisButtons(2);
            optionsP.setVisible(true);
+           add(optionsP);
         }
          if (obj == menuP.bScores){
            menuP.setVisible(false);
            mBarP.setVisible(true);
-           mBarP.setGameStatus(0);
-           add(scoresP, "Center");
+           mBarP.setVisButtons(0);
            scoresP.setVisible(true);
         }
     }

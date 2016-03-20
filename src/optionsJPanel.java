@@ -1,12 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+//import javax.swing.event.ChangeEvent;
+//import javax.swing.event.ChangeListener;
 
-public class optionsJPanel extends JPanel 
+public class optionsJPanel extends JPanel implements ActionListener
 {   
     imageButton bMode, bSpeed, bFlavors, bSound;
     JRadioButton jrbNormal, jrbSurvival, jrbMarathon;
     ButtonGroup bgMode;
     optionsSlider jsSpeed, jsFlavors;
+    final static int DEFAULT_FLAVORS = 3, DEFAULT_SPEED = 2, DEFAULT_MODE = 1;
+    final static boolean DEFAULT_SOUND = true;
+    int flavors = DEFAULT_FLAVORS, speed = DEFAULT_SPEED, mode = DEFAULT_MODE;
+    boolean sound = DEFAULT_SOUND;
     public optionsJPanel ()
     {
         super();        
@@ -15,6 +23,18 @@ public class optionsJPanel extends JPanel
         bSpeed = new imageButton("images/optionsP/iSpeed.png");
         bFlavors = new imageButton("images/optionsP/iFlavor.png");
         bSound = new imageButton("images/optionsP/iSoundEn.png", "images/optionsP/iSoundDis.png");
+        bSound.addActionListener(this);
+        
+        System.out.println("Initializing optionsP");
+        //Set Sound Icon
+        if (sound) {
+            bSound.setAltImage(true);
+            sound = false;
+        }
+        else if (!sound) {
+            bSound.setAltImage(false);
+            sound = true;
+        }
         
         //Initialize and group RadioButtons
         jrbNormal = new JRadioButton("Normal");
@@ -23,11 +43,25 @@ public class optionsJPanel extends JPanel
         bgMode = new ButtonGroup();
         bgMode.add(jrbNormal);
         bgMode.add(jrbSurvival);
-        bgMode.add(jrbMarathon);
+        bgMode.add(jrbMarathon);switch (mode) {
+            case 1: {
+                jrbNormal.setSelected(true);
+                break;
+            }
+            case 2: {
+                jrbSurvival.setSelected(true);
+                break;
+            }
+            case 3: {
+                jrbMarathon.setSelected(true);
+                break;
+            }
+        }
+
         
         //Initialize Sliders
-        jsSpeed = new optionsSlider(JSlider.HORIZONTAL, 1, 5, 2, 1);
-        jsFlavors = new optionsSlider(JSlider.HORIZONTAL, 1, 5, 3, 1);
+        jsSpeed = new optionsSlider(JSlider.HORIZONTAL, 1, 5, speed, 1);
+        jsFlavors = new optionsSlider(JSlider.HORIZONTAL, 1, 5, flavors, 1);
         
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -55,5 +89,49 @@ public class optionsJPanel extends JPanel
         c.gridy = 7;
         add(bSound, c);
         
+    }
+    //Save changes locally
+    public void setAll() {
+        speed = jsSpeed.getValue();
+        flavors = jsSpeed.getValue();
+        if (jrbNormal.isSelected()) {
+            mode = 1;
+        }
+        else if (jrbSurvival.isSelected()) {
+            mode = 2;
+        }
+        else {
+            mode = 3;
+        }   
+    }
+    public void setMuted(boolean isMuted) {
+        if (isMuted) {
+            bSound.setAltImage(true);
+            sound = false;
+        }
+        else if (!isMuted) {
+            bSound.setAltImage(false);
+            sound = true;
+        }
+    }
+    //Reset Defaults
+    public void setDefaults() {
+        speed = DEFAULT_SPEED;
+        flavors = DEFAULT_FLAVORS;
+        mode = DEFAULT_MODE;
+        sound = DEFAULT_SOUND;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        Object obj = event.getSource();
+        if (obj == bSound) {
+           if (sound) {
+               setMuted(true);
+           }
+           else {
+               setMuted(false);
+           }
+        }
     }
 }
