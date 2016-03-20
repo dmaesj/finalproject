@@ -11,5 +11,12 @@ public class optionsJPanel extends JPanel
         bTemp.setText("Options Panel");
         add(bTemp);
         
+        setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipady = 10;
+        
+        
     }
 }

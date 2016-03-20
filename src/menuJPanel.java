@@ -3,8 +3,7 @@ import java.awt.*;
 
 public class menuJPanel extends JPanel 
 {
-    JButton bLabel, bGame, bInst, bScores, bCredits, bOptions, bLion;
-    ImageIcon iLabel, iGame, iInst, iScores, iCredits, iOptions, iLion;
+    imageButton bLabel, bGame, bInst, bScores, bCredits, bOptions, bLion;
     public menuJPanel ()
     {
         super();
@@ -15,51 +14,14 @@ public class menuJPanel extends JPanel
         c.ipady = 10;
         
         //Initialize Buttons and Icons
-        bLabel = new JButton();
-        bGame = new JButton();
-        bOptions = new JButton();
-        bInst = new JButton();
-        bScores = new JButton();
-        bCredits = new JButton();
-        bLion = new JButton ();
-        
-        iLabel = new ImageIcon("images/menuP/iLabel.png");
-        iGame = new ImageIcon("images/menuP/iGame.png");
-        iInst = new ImageIcon("images/menuP/iInst.png");
-        iScores = new ImageIcon("images/menuP/iScores.png");
-        iCredits = new ImageIcon("images/menuP/iCredits.png");
-        iOptions = new ImageIcon("images/menuP/iOptions.png");
-        iLion = new ImageIcon("images/menuP/iLionSmall.png");
-        
-        // Add ImageIcons to buttons and set border and button fill as invisible
-        bLabel.setIcon(iLabel);
-        bLabel.setBorderPainted(false);
-        bLabel.setContentAreaFilled(false);
-        
-        bGame.setIcon(iGame);
-        bGame.setBorderPainted(false);
-        bGame.setContentAreaFilled(false);
-        
-        bInst.setIcon(iInst);
-        bInst.setBorderPainted(false);
-        bInst.setContentAreaFilled(false);
-        
-        bScores.setIcon(iScores);
-        bScores.setBorderPainted(false);
-        bScores.setContentAreaFilled(false);
-        
-        bCredits.setIcon(iCredits);
-        bCredits.setBorderPainted(false);
-        bCredits.setContentAreaFilled(false);
-        
-        bOptions.setIcon(iOptions);
-        bOptions.setBorderPainted(false);
-        bOptions.setContentAreaFilled(false);
-        
-        bLion.setIcon(iLion);
-        bLion.setBorderPainted(false);
-        bLion.setContentAreaFilled(false);
-        
+        bLabel = new imageButton("images/menuP/iLabel.png");
+        bGame = new imageButton("images/menuP/iGame.png");
+        bOptions = new imageButton("images/menuP/iOptions.png");
+        bInst = new imageButton("images/menuP/iInst.png");
+        bScores = new imageButton("images/menuP/iScores.png");
+        bCredits = new imageButton("images/menuP/iCredits.png");
+        bLion = new imageButton("images/menuP/iLionSmall.png");
+         
         //Add Buttons, setting gridbaglayout constraints
         c.gridx = 0;
         c.gridy = 0;
