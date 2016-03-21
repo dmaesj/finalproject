@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import javax.swing.event.ChangeEvent;
-//import javax.swing.event.ChangeListener;
 
 public class optionsJPanel extends JPanel implements ActionListener
 {   
@@ -15,6 +13,7 @@ public class optionsJPanel extends JPanel implements ActionListener
     boolean DEFAULT_SOUND = true;
     int flavors = DEFAULT_FLAVORS, speed = DEFAULT_SPEED, mode = DEFAULT_MODE;
     boolean sound = DEFAULT_SOUND;
+    JTextArea saved;
     public optionsJPanel ()
     {
         super();        
@@ -55,12 +54,18 @@ public class optionsJPanel extends JPanel implements ActionListener
         jsSpeed = new optionsSlider(JSlider.HORIZONTAL, 1, 5, speed, 1);
         jsFlavors = new optionsSlider(JSlider.HORIZONTAL, 1, 5, flavors, 1);
         
+        saved = new JTextArea("Options Saved...");
+        saved.setVisible(false);
+        
+        
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 1;
         c.gridy = 0;
         c.ipady = 10;
         c.insets = new Insets(10,0,0,0);
+        add(saved, c);
+        c.gridy = 1;
         add(bMode, c);
         c.gridy = 2;
         c.gridx = 0;

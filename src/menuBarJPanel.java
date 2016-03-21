@@ -31,7 +31,6 @@ public class menuBarJPanel extends JPanel implements ActionListener
         bSave.addActionListener(this);
         bDiscard.addActionListener(this);
         
-        
         //Add standard buttons
         add(bReturn);
         add(bPause);
@@ -40,14 +39,12 @@ public class menuBarJPanel extends JPanel implements ActionListener
         add(bDiscard);
         add(bPlay);
         add(bSave);
-        
-        
+  
     }
     
     // Display panel specific buttons
     public void setVisButtons(int inStatus) {
-        switch (inStatus) {
-            case 0: { // Status 0: reset visible
+                 // reset visible
                 bPause.setVisible(false);
                 bSound.setVisible(false);
                 bGiveUp.setVisible(false);
@@ -55,16 +52,13 @@ public class menuBarJPanel extends JPanel implements ActionListener
                 bPlay.setVisible(false);
                 bReturn.setVisible(false);
                 bDiscard.setVisible(false);
-                break;
-            }
+                
+        switch (inStatus) {
             case 1: { // Status 1: Active game panel
-                if (gameP.isMuted()) {
-                    bSound.setAltImage(true);
-                }
-                else {
-                    bSound.setAltImage(false);
-                }
+
+                bSound.setAltImage(gameP.isMuted());
                 bSound.setVisible(true);
+                
                 bPause.setVisible(true);
                 bGiveUp.setVisible(true);
                 break;
@@ -84,7 +78,7 @@ public class menuBarJPanel extends JPanel implements ActionListener
                 break;
             }
         }
-        
+      
         
         if (inStatus == 1) {
             
@@ -99,36 +93,29 @@ public class menuBarJPanel extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent event) {
         Object obj = event.getSource();
+        boolean bool;
         // Toggles pause status
         if (obj == bPause) {
-            if (!gameP.getGameState()){
-                //add code to pause game
-                bPause.setAltImage(true);
-                gameP.setGamePaused(true);
-            }
-            else {
-                //add code to resume game
-                bPause.setAltImage(false);
-                gameP.setGamePaused(false);
-            }
+            
+            bool = (!(gameP.getGameState()));
+
+                bPause.setAltImage(bool);
+                gameP.setGamePaused(bool);
         }
         // Toggles mute
         if (obj == bSound) {
-             if (gameP.isMuted()){
-                optionsP.setMuted(false);
-                bSound.setAltImage(false);
-                gameP.setMuted(false);
-            }
-            else {
-                bSound.setAltImage(true);
-                optionsP.setMuted(true);
-                gameP.setMuted(true);
-            }
+            bool = (!(gameP.isMuted()));
+            
+            optionsP.setMuted(bool);
+            bSound.setAltImage(bool);
+            gameP.setMuted(bool);
+
         }
         // Save optionsP options to gameP
         if (obj == bSave) {
             optionsP.setAll();
             gameP.setOptions(optionsP.speed, optionsP.flavors, optionsP.mode);
+            optionsP.saved.setVisible(true);
             
         }
     }
