@@ -28,6 +28,9 @@ public class menuBarJPanel extends JPanel implements ActionListener
         //Add listeners
         bPause.addActionListener(this);
         bSound.addActionListener(this);
+        bSave.addActionListener(this);
+        bDiscard.addActionListener(this);
+        
         
         //Add standard buttons
         add(bReturn);
@@ -44,7 +47,7 @@ public class menuBarJPanel extends JPanel implements ActionListener
     // Display panel specific buttons
     public void setVisButtons(int inStatus) {
         switch (inStatus) {
-            case 0: { // Status 0: plain menu bar or reset
+            case 0: { // Status 0: reset visible
                 bPause.setVisible(false);
                 bSound.setVisible(false);
                 bGiveUp.setVisible(false);
@@ -66,11 +69,15 @@ public class menuBarJPanel extends JPanel implements ActionListener
                 bGiveUp.setVisible(true);
                 break;
             }
-            case 2: { // Active options panel
+            case 2: { // Status 2: Active options panel
+                bReturn.setVisible(true);
                 bDiscard.setVisible(true);
                 bPlay.setVisible(true);
                 bSave.setVisible(true);
                 break;
+            }
+            case 3: { // Status 3: Placehoder for other panels
+                bReturn.setVisible(true);
             }
             default: {
                 System.out.println("no supported default");
@@ -117,6 +124,12 @@ public class menuBarJPanel extends JPanel implements ActionListener
                 optionsP.setMuted(true);
                 gameP.setMuted(true);
             }
+        }
+        // Save optionsP options to gameP
+        if (obj == bSave) {
+            optionsP.setAll();
+            gameP.setOptions(optionsP.speed, optionsP.flavors, optionsP.mode);
+            
         }
     }
 }

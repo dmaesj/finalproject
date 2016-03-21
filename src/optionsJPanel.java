@@ -26,15 +26,7 @@ public class optionsJPanel extends JPanel implements ActionListener
         bSound.addActionListener(this);
         
         System.out.println("Initializing optionsP");
-        //Set Sound Icon
-        if (sound) {
-            bSound.setAltImage(true);
-            sound = false;
-        }
-        else if (!sound) {
-            bSound.setAltImage(false);
-            sound = true;
-        }
+        
         
         //Initialize and group RadioButtons
         jrbNormal = new JRadioButton("Normal");
@@ -103,6 +95,31 @@ public class optionsJPanel extends JPanel implements ActionListener
         else {
             mode = 3;
         }   
+    }
+    // Set slider values
+    public void setMenuItems(int inSpeed, int inFlavors, int inMode) {
+        jsSpeed.setValue(inSpeed);
+        jsFlavors.setValue(inFlavors);
+        switch (inMode) {
+            case 1: {
+                jrbNormal.setSelected(true);
+                break;
+            }
+            case 2: {
+                jrbSurvival.setSelected(true);
+                break;
+            }
+            case 3: {
+                jrbMarathon.setSelected(true);
+                break;
+            }
+        }
+        if (sound) {
+            bSound.setAltImage(true);
+        }
+        else if (!sound) {
+            bSound.setAltImage(false);
+        }
     }
     public void setMuted(boolean isMuted) {
         if (isMuted) {

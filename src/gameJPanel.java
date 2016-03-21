@@ -6,14 +6,18 @@ import java.awt.event.ActionListener;
 public class gameJPanel extends JPanel
 {
     private boolean gameStatePaused = false;
-    private boolean soundMuted = false; // will need to be changed after options panel is added
-    JButton bTemp;
+    private boolean soundMuted = false, gameKill = false; // will need to be changed after options panel is added
+    JButton bTemp1, bTemp2, bTemp3;
+    int speed = 2, flavors = 3, mode = 1;
     public gameJPanel ()
     {   
         super();
-        bTemp = new JButton();
-        bTemp.setText("Game Panel");
-        add(bTemp);
+        bTemp1 = new JButton("Speed: " + speed);
+        bTemp2 = new JButton("Flavors: " + flavors);
+        bTemp3 = new JButton("Mode: " + mode);
+        add(bTemp1);
+        add(bTemp2);
+        add(bTemp3);
         System.out.println("game constructed");
     }
     // Pauses or resumes game loop
@@ -31,5 +35,18 @@ public class gameJPanel extends JPanel
     // Returns whether or not game is muted
     public boolean isMuted() {
         return soundMuted;
+    }
+    // Set game options
+    public void setOptions(int inSpeed, int inFlavors, int inMode) {
+        speed = inSpeed;
+        flavors = inFlavors;
+        mode = inMode;
+        bTemp1.setText("Speed: " + speed);
+        bTemp2.setText("Flavors: " + flavors);
+        bTemp3.setText("Mode: " + mode);
+    }
+    // Quit current game
+    public void gQuit() {
+        gameKill = true;
     }
 }
