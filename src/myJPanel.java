@@ -91,6 +91,7 @@ public class myJPanel extends JPanel implements ActionListener
            
            mBarP.setVisButtons(2);
            optionsP.setMenuItems(gameP.speed, gameP.flavors, gameP.mode);
+           optionsP.saved.setVisible(false);
            switchPanel("options");
         }
         

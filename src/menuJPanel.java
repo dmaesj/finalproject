@@ -23,7 +23,7 @@ public class menuJPanel extends JPanel
         bLion = new imageButton("images/menuP/iLionSmall.png");
          
         //Add Buttons, setting gridbaglayout constraints
-        c.gridx = 0;
+        c.gridx = 10;
         c.gridy = 0;
         c.ipadx = 10;
         c.insets = new Insets(10,0,0,0);
@@ -39,7 +39,7 @@ public class menuJPanel extends JPanel
         c.gridy=6;
         add(bCredits, c);
         c.gridy=7;
-        c.gridx=10;
+        c.gridx=12;
         c.anchor= GridBagConstraints.SOUTHEAST;
         add(bLion, c);
     }

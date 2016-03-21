@@ -78,7 +78,7 @@ public class menuBarJPanel extends JPanel implements ActionListener
                 break;
             }
         }
-        
+      
         
         if (inStatus == 1) {
             
@@ -115,6 +115,7 @@ public class menuBarJPanel extends JPanel implements ActionListener
         if (obj == bSave) {
             optionsP.setAll();
             gameP.setOptions(optionsP.speed, optionsP.flavors, optionsP.mode);
+            optionsP.saved.setVisible(true);
             
         }
     }
