@@ -50,11 +50,15 @@ public class menuBarJPanel extends JPanel implements ActionListener
                 bGiveUp.setVisible(false);
                 bSave.setVisible(false);
                 bPlay.setVisible(false);
-                bReturn.setVisible(false);
+                bReturn.setVisible(true);
                 bDiscard.setVisible(false);
                 break;
             }
             case 1: { // Status 1: Active game panel
+                bSave.setVisible(false);
+                bPlay.setVisible(false);
+                bReturn.setVisible(false);
+                bDiscard.setVisible(false);
                 if (gameP.isMuted()) {
                     bSound.setAltImage(true);
                 }
@@ -67,6 +71,12 @@ public class menuBarJPanel extends JPanel implements ActionListener
                 break;
             }
             case 2: { // Active options panel
+                bPlay.setVisible(false);
+                bReturn.setVisible(false);
+                bSound.setVisible(false);
+                bPause.setVisible(false);
+                bGiveUp.setVisible(false);
+                
                 bDiscard.setVisible(true);
                 bPlay.setVisible(true);
                 bSave.setVisible(true);

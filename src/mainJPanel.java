@@ -35,6 +35,9 @@ public class mainJPanel extends JPanel implements ActionListener
         menuP.bCredits.addActionListener(this);
         
         mBarP.bReturn.addActionListener(this);
+        mBarP.bDiscard.addActionListener(this);
+        mBarP.bSave.addActionListener(this);
+        mBarP.bGiveUp.addActionListener(this);
         
         //Add panels
         add(mBarP, "North");
@@ -55,7 +58,11 @@ public class mainJPanel extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent event) {
         Object obj = event.getSource();
-        if (obj == mBarP.bReturn) {
+        if (obj == mBarP.bReturn 
+                || obj == mBarP.bDiscard 
+                || obj == mBarP.bSave
+                || obj == mBarP.bGiveUp
+                ) {
             mBarP.setVisible(false);
             menuP.setVisible(true);
             gameP.setVisible(false);
@@ -67,7 +74,6 @@ public class mainJPanel extends JPanel implements ActionListener
           if (obj == menuP.bGame){
            menuP.setVisible(false);
            mBarP.setVisible(true);
-           mBarP.setVisButtons(0);
            mBarP.setVisButtons(1);
            gameP.setVisible(true);
         }
@@ -86,7 +92,6 @@ public class mainJPanel extends JPanel implements ActionListener
          if (obj == menuP.bOptions){
            menuP.setVisible(false);
            mBarP.setVisible(true);
-           mBarP.setVisButtons(0);
            mBarP.setVisButtons(2);
            optionsP.setVisible(true);
            add(optionsP);
