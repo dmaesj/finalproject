@@ -1,24 +1,21 @@
+
 import java.awt.*;
 import javax.swing.*;
 
-public class myJFrame extends JFrame
-{
-	public myJFrame ()
-	{
-		super ("Berkey Creamery");
-		
+public class myJFrame extends JFrame {
 
-  	 	myJPanel mPanel = new myJPanel();
-    
-    	
-    	
-		getContentPane().add(mPanel,"Center");
-		
+    public myJFrame() {
+        super("Berkey Creamery");
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize (960, 720);
-                setExtendedState(Frame.MAXIMIZED_BOTH);
-		setVisible(true);
-	}
+        myJPanel mPanel = new myJPanel();
+
+        getContentPane().add(mPanel, "Center");
+
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(1000, 800));
+        setSize(1000, 800);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+        setVisible(true);
+    }
 
 }
