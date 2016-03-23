@@ -1,10 +1,10 @@
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
-public class myJPanel extends JPanel implements ActionListener
-{
+public class myJPanel extends JPanel implements ActionListener {
+
     instJPanel instP;
     scoresJPanel scoresP;
     creditsJPanel creditsP;
@@ -12,133 +12,117 @@ public class myJPanel extends JPanel implements ActionListener
     gameJPanel gameP;
     menuJPanel menuP;
     menuBarJPanel mBarP;
-    public myJPanel ()
-    {
+    JLabel sizeLabel;
+
+    public myJPanel() {
         super();
         setLayout(new BorderLayout());
-        
         //Initialize Panels
-        
+
         instP = new instJPanel();
         scoresP = new scoresJPanel();
         creditsP = new creditsJPanel();
         optionsP = new optionsJPanel();
         gameP = new gameJPanel();
         menuP = new menuJPanel();
-        mBarP = new menuBarJPanel(gameP, optionsP);
-        
+        mBarP = new menuBarJPanel();
         //Add Listeners
         menuP.bGame.addActionListener(this);
         menuP.bOptions.addActionListener(this);
         menuP.bInst.addActionListener(this);
         menuP.bScores.addActionListener(this);
         menuP.bCredits.addActionListener(this);
+
         mBarP.bGiveUp.addActionListener(this);
         mBarP.bReturn.addActionListener(this);
-        mBarP.bDiscard.addActionListener(this);
         mBarP.bPlay.addActionListener(this);
-        
         //Add panels
-        add(mBarP, "North");
-        mBarP.setVisible(false);
-        /*add(gameP, "Center");
-        gameP.setVisible(false);
-        add(instP, "Center");
-        instP.setVisible(false);
-        add(creditsP, "Center");
-        creditsP.setVisible(false);
-        add(optionsP, "Center");
-        optionsP.setVisible(false);
-        add(scoresP, "Center");
-        scoresP.setVisible(false);*/
-        add(menuP, "Center");
+        switchPanel("menu");
     }
 
+    public void switchPanel(String state) {
+
+        if (state.equals("menu")) {
+            add(menuP, "Center");
+        } else {
+            remove(menuP);
+        }
+        if (!state.equals("menu")) {
+            add(mBarP, "North");
+        } else {
+            remove(mBarP);
+        }
+        if (state.equals("game")) {
+            gameP.update();
+            add(gameP, "Center");
+        } else {
+            remove(gameP);
+        }
+        if (state.equals("instructions")) {
+            add(instP, "Center");
+        } else {
+            remove(instP);
+        }
+        if (state.equals("scores")) {
+            add(scoresP, "Center");
+        } else {
+            remove(scoresP);
+        }
+        if (state.equals("credits")) {
+            add(creditsP, "Center");
+        } else {
+            remove(creditsP);
+        }
+        if (state.equals("options")) {
+            optionsP.update();
+            add(optionsP, "Center");
+        } else {
+            remove(optionsP);
+        }
+
+        revalidate();
+        repaint();
+    }
     @Override
     public void actionPerformed(ActionEvent event) {
         Object obj = event.getSource();
+
         if (obj == mBarP.bReturn) {
-            mBarP.setVisible(false);
-            menuP.setVisible(true);
-            gameP.setVisible(false);
-            instP.setVisible(false);
-            scoresP.setVisible(false);
-            creditsP.setVisible(false);
-            optionsP.setVisible(false);
+            switchPanel("menu");
         }
-          if (obj == menuP.bGame){
-           menuP.setVisible(false);
-           mBarP.setVisible(true);
-           mBarP.setVisButtons(0);
-           mBarP.setVisButtons(1);
-           gameP.setVisible(true);
-           add(gameP);
+
+        if (obj == menuP.bInst) {
+            switchPanel("instructions");
+            mBarP.setVisButtons(app.OTHERPANEL);
         }
-        if (obj == menuP.bInst){
-           menuP.setVisible(false);
-           mBarP.setVisible(true);
-           mBarP.setVisButtons(0);
-           mBarP.setVisButtons(3);
-           instP.setVisible(true);
-           add(instP);
+
+        if (obj == menuP.bCredits) {
+            switchPanel("credits");
+            mBarP.setVisButtons(app.OTHERPANEL);
         }
-        if (obj == menuP.bCredits){
-           menuP.setVisible(false);
-           mBarP.setVisible(true);
-           mBarP.setVisButtons(0);
-           mBarP.setVisButtons(3);
-           creditsP.setVisible(true);
-           add(creditsP);
+
+        if (obj == menuP.bScores) {
+            switchPanel("scores");
+            mBarP.setVisButtons(app.OTHERPANEL);
+
         }
-         if (obj == menuP.bOptions){
-           menuP.setVisible(false);
-           mBarP.setVisible(true);
-           mBarP.setVisButtons(0);
-           mBarP.setVisButtons(2);
-           optionsP.setVisible(true);
-           optionsP.setMenuItems(gameP.speed, gameP.flavors, gameP.mode);
-           add(optionsP);
-        }
-         if (obj == menuP.bScores){
-           menuP.setVisible(false);
-           mBarP.setVisible(true);
-           mBarP.setVisButtons(0);
-           mBarP.setVisButtons(3);
-           scoresP.setVisible(true);
-           add(scoresP);
-        }
+
         if (obj == mBarP.bGiveUp) {
-            mBarP.setVisible(false);
-            menuP.setVisible(true);
-            gameP.setVisible(false);
-            instP.setVisible(false);
-            scoresP.setVisible(false);
-            creditsP.setVisible(false);
-            optionsP.setVisible(false);
             gameP.gQuit();
-            remove(gameP);
+            app.paused = false;
+            switchPanel("menu");
         }
-        if (obj == mBarP.bDiscard) {
-            mBarP.setVisible(false);
-            menuP.setVisible(true);
-            gameP.setVisible(false);
-            instP.setVisible(false);
-            scoresP.setVisible(false);
-            creditsP.setVisible(false);
-            optionsP.setVisible(false);
-            optionsP.setDefaults();
-            gameP.setOptions(optionsP.speed, optionsP.flavors, optionsP.mode);
+
+        if (obj == menuP.bOptions) {
+            optionsP.update();
+            mBarP.setVisButtons(app.OPTIONSPANEL);
+            switchPanel("options");
         }
-        if (obj == mBarP.bPlay){
-           menuP.setVisible(false);
-           optionsP.setVisible(false);
-           mBarP.setVisible(true);
-           mBarP.setVisButtons(0);
-           mBarP.setVisButtons(1);
-           gameP.setVisible(true);
-           optionsP.setAll();
-           gameP.setOptions(optionsP.speed, optionsP.flavors, optionsP.mode);
-           add(gameP);
+
+        if (obj == mBarP.bPlay || obj == menuP.bGame) {
+            gameP.update();
+            switchPanel("game");
+            mBarP.setVisButtons(app.GAMEPANEL);
         }
     }
 }

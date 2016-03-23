@@ -1,11 +1,12 @@
+
 import javax.swing.*;
 import java.awt.*;
 
 public class instJPanel extends JPanel {
-    
+
     JButton bTemp;
-    public instJPanel ()
-    {
+
+    public instJPanel() {
         super();
         JButton bTemp;
         bTemp = new JButton();
