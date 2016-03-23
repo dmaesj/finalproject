@@ -8,6 +8,7 @@ public class menuBarJPanel extends JPanel implements ActionListener {
 
     imageButton bReturn, bPause, bGiveUp, bSound, bPlay;
     myJPanel mainPanel;
+
     public menuBarJPanel() {
         super();
         setBackground(Color.LIGHT_GRAY);
@@ -55,6 +56,7 @@ public class menuBarJPanel extends JPanel implements ActionListener {
                 setPaused(app.paused);
                 setMuted(app.muted);
                 bSound.setVisible(true);
+
                 bPause.setVisible(true);
                 bGiveUp.setVisible(true);
                 break;
@@ -73,6 +75,7 @@ public class menuBarJPanel extends JPanel implements ActionListener {
             }
         }
     }
+
     public void setPaused() {
         bPause.doClick();
     }
@@ -85,13 +88,16 @@ public class menuBarJPanel extends JPanel implements ActionListener {
     public boolean getPaused() {
         return app.paused;
     }
-    public void setMuted(){
+
+    public void setMuted() {
         bSound.doClick();
     }
-    public void setMuted(boolean muted){
+
+    public void setMuted(boolean muted) {
         app.muted = muted;
         bSound.setAltImage(app.muted);
     }
+
     @Override
     public void actionPerformed(ActionEvent event) {
         Object obj = event.getSource();

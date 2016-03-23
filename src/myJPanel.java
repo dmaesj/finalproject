@@ -83,6 +83,7 @@ public class myJPanel extends JPanel implements ActionListener {
         revalidate();
         repaint();
     }
+
     @Override
     public void actionPerformed(ActionEvent event) {
         Object obj = event.getSource();
