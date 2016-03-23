@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -22,12 +23,14 @@ public class optionsJPanel extends JPanel
         bMode = new imageButton("images/optionsP/iMode.png");
         bSpeed = new imageButton("images/optionsP/iSpeed.png");
         bFlavors = new imageButton("images/optionsP/iFlavor.png");
-        bSound = new imageButton("images/optionsP/iSoundEn.png", "images/optionsP/iSoundDis.png");
-        
-        
+        bSound = new imageButton("images/optionsP/iSoundEn.png",
+                "images/optionsP/iSoundEnP.png",
+                "images/optionsP/iSoundDis.png",
+                "images/optionsP/iSoundDisP.png");
+  
+
         System.out.println("Initializing optionsP");
-        
-        
+
         //Initialize and group RadioButtons
         jrbNormal = new JRadioButton("Normal");
         jrbSurvival = new JRadioButton("Survival");
@@ -51,7 +54,6 @@ public class optionsJPanel extends JPanel
                 break;
             }
         }
-
         
         //Initialize Sliders
         jsSpeed = new optionsSlider(JSlider.HORIZONTAL, 1, 5, gameOpt.getSpeed(), 1);
@@ -66,27 +68,24 @@ public class optionsJPanel extends JPanel
         c.gridx = 1;
         c.gridy = 0;
         c.ipady = 10;
-        c.insets = new Insets(10,0,0,0);
-        add(saved, c);
+        c.insets = new Insets(10, 0, 0, 0);
         c.gridy = 1;
-        add(bMode, c);
-        c.gridy = 2;
         c.gridx = 0;
         add(jrbNormal, c);
         c.gridx = 1;
         add(jrbSurvival, c);
-        c.gridx = 2; 
+        c.gridx = 2;
         add(jrbMarathon, c);
-        c.gridy = 3;
+        c.gridy = 2;
         c.gridx = 1;
         add(bSpeed, c);
-        c.gridy = 4;
+        c.gridy = 3;
         add(jsSpeed, c);
-        c.gridy = 5;
+        c.gridy = 4;
         add(bFlavors, c);
-        c.gridy = 6;
+        c.gridy = 5;
         add(jsFlavors, c);
-        c.gridy = 7;
+        c.gridy = 6;
         add(bSound, c);
         
         setOptionScreen();

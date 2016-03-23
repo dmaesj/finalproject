@@ -1,7 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class gameJPanel extends JPanel
 {
@@ -25,10 +22,11 @@ public class gameJPanel extends JPanel
         updateButtonText();
         System.out.println("game constructed");
     }
-    // Pauses or resumes game loop
-    public void setGamePaused(boolean ispaused) {
-        gameStatePaused = ispaused;
+
+    public void setGamePaused(boolean bool) {
+        gameStatePaused = bool;
     }
+    
     // Return whether or not game loop is paused
     public boolean getGameState() {
         return gameStatePaused;
