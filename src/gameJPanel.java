@@ -6,18 +6,23 @@ import java.awt.event.ActionListener;
 public class gameJPanel extends JPanel
 {
     private boolean gameStatePaused = false;
-    private boolean soundMuted = false, gameKill = false; // will need to be changed after options panel is added
+    private boolean sound, gameKill = false; // will need to be changed after options panel is added
     JButton bSpeed, bMode, bFlavor;
-    int speed = 2, flavors = 3, mode = 1;
-    public gameJPanel ()
+    int speed, flavors, mode;
+    options gameOpt;
+    
+    public gameJPanel (options inOpt)
     {   
         super();
-        bSpeed = new JButton("Speed: " + speed);
-        bFlavor = new JButton("Flavors: " + flavors);
-        bMode = new JButton("Mode: " + mode);
+        gameOpt = inOpt;
+        setGameOptions();
+        bSpeed = new JButton();
+        bFlavor = new JButton();
+        bMode = new JButton();
         add(bSpeed);
         add(bFlavor);
         add(bMode);
+        updateButtonText();
         System.out.println("game constructed");
     }
     // Pauses or resumes game loop
@@ -28,19 +33,19 @@ public class gameJPanel extends JPanel
     public boolean getGameState() {
         return gameStatePaused;
     }
-    // Mutes and unmutes sound effects
-    public void setMuted(boolean muted) {
-        soundMuted = muted;
-    }
     // Returns whether or not game is muted
     public boolean isMuted() {
-        return soundMuted;
+        return !sound;
     }
     // Set game options
-    public void setOptions(int inSpeed, int inFlavors, int inMode) {
-        speed = inSpeed;
-        flavors = inFlavors;
-        mode = inMode;
+    public void setGameOptions() {
+        gameOpt.getOptions();
+        speed = gameOpt.getSpeed();
+        flavors = gameOpt.getFlavor();
+        mode = gameOpt.getMode();
+        sound = gameOpt.getSound();
+    }
+    public void updateButtonText() {
         bSpeed.setText("Speed: " + speed);
         bFlavor.setText("Flavors: " + flavors);
         bMode.setText("Mode: " + mode);

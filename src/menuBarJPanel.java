@@ -1,21 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class menuBarJPanel extends JPanel implements ActionListener
+
+public class menuBarJPanel extends JPanel
 {   
     imageButton bReturn, bPause, bGiveUp, bSound, bPlay, bSave, bDiscard;
-    gameJPanel gameP;
-    optionsJPanel optionsP;
-    public menuBarJPanel (gameJPanel inGame, optionsJPanel inOptions)
+    options gameOpt;
+    public menuBarJPanel (options inOpt)
     { 
         super();
         setBackground(Color.LIGHT_GRAY);
-        // Pass gameP by reference for pause functionality;
-        gameP = inGame;
-        optionsP = inOptions;
-        
+        gameOpt = inOpt;
         //Initialize buttons
         bReturn = new imageButton("images/mBarP/iMenu.png");
         bPause = new imageButton("images/mBarP/iPause.png", "images/mBarP/iResume.png");
@@ -25,12 +20,7 @@ public class menuBarJPanel extends JPanel implements ActionListener
         bPlay = new imageButton("images/mBarP/iPlay.png");
         bDiscard = new imageButton("images/mBarP/iDiscard.png");
         
-        //Add listeners
-        bPause.addActionListener(this);
-        bSound.addActionListener(this);
-        bSave.addActionListener(this);
-        bDiscard.addActionListener(this);
-        
+
         //Add standard buttons
         add(bReturn);
         add(bPause);
@@ -56,7 +46,7 @@ public class menuBarJPanel extends JPanel implements ActionListener
         switch (inStatus) {
             case 1: { // Status 1: Active game panel
 
-                bSound.setAltImage(gameP.isMuted());
+                bSound.setAltImage(!gameOpt.getSound());
                 bSound.setVisible(true);
                 
                 bPause.setVisible(true);
@@ -87,36 +77,6 @@ public class menuBarJPanel extends JPanel implements ActionListener
             bPause.setVisible(false);
             bSound.setVisible(false);
             bGiveUp.setVisible(false);
-        }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent event) {
-        Object obj = event.getSource();
-        boolean bool;
-        // Toggles pause status
-        if (obj == bPause) {
-            
-            bool = (!(gameP.getGameState()));
-
-                bPause.setAltImage(bool);
-                gameP.setGamePaused(bool);
-        }
-        // Toggles mute
-        if (obj == bSound) {
-            bool = (!(gameP.isMuted()));
-            
-            optionsP.setMuted(bool);
-            bSound.setAltImage(bool);
-            gameP.setMuted(bool);
-
-        }
-        // Save optionsP options to gameP
-        if (obj == bSave) {
-            optionsP.setAll();
-            gameP.setOptions(optionsP.speed, optionsP.flavors, optionsP.mode);
-            optionsP.saved.setVisible(true);
-            
         }
     }
 }

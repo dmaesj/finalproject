@@ -3,6 +3,8 @@ import javax.swing.*;
 
 public class imageButton extends JButton {
     private ImageIcon iReleased, iPressed;
+    public boolean altState = false;
+    
     imageButton(String imagePath1) {
         super();
         iReleased = new ImageIcon(imagePath1);
@@ -22,9 +24,11 @@ public class imageButton extends JButton {
     public void setAltImage(boolean alt) {
         if (alt) {
             setIcon(iPressed);
+            altState = true;
         }
         else {
             setIcon(iReleased);
+            altState = false;
         }
     }
     // Changes primary or alternate images manually
@@ -35,5 +39,10 @@ public class imageButton extends JButton {
         else {
             iPressed = new ImageIcon(inPath);
         }
+    }
+    
+    public boolean getAltState() 
+    {
+        return this.altState;
     }
 }
