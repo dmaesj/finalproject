@@ -1,18 +1,16 @@
+
 import javax.swing.*;
 
-public class gameJPanel extends JPanel 
-{
+public class gameJPanel extends JPanel {
+
     private boolean gameStatePaused = false;
-    private boolean sound, gameKill = false; // will need to be changed after options panel is added
+    private boolean gameKill = false;
     JButton bSpeed, bMode, bFlavor;
-    int speed, flavors, mode;
     options gameOpt;
     gameSprite flavor1, flavor2, flavor3, flavor4, flavor5, cone;
-    public gameJPanel (options inOpt)
-    {   
+    public gameJPanel(options inOpt) {
         super();
         gameOpt = inOpt;
-        setGameOptions();
         bSpeed = new JButton();
         bFlavor = new JButton();
         bMode = new JButton();
@@ -24,38 +22,33 @@ public class gameJPanel extends JPanel
         setLayout(null);
         
         // starts game loops
-        switch (mode) {
+        switch (gameOpt.mode) {
             case 1: { gameNormal(); break;}
             case 2: { gameMarathon(); break; }
             case 3: { gameSurvival(); break; }
         }
     }
+
+    public void setGamePaused() {
+        gameStatePaused = !gameStatePaused;
+    }
+
     
     public void setGamePaused(boolean bool) {
         gameStatePaused = bool;
     }
-    
+
     // Return whether or not game loop is paused
     public boolean getGameState() {
         return gameStatePaused;
     }
-    // Returns whether or not game is muted
-    public boolean isMuted() {
-        return !sound;
-    }
-    // Set game options
-    public void setGameOptions() {
-        gameOpt.getOptions();
-        speed = gameOpt.getSpeed();
-        flavors = gameOpt.getFlavor();
-        mode = gameOpt.getMode();
-        sound = gameOpt.getSound();
-    }
+
     public void updateButtonText() {
-        bSpeed.setText("Speed: " + speed);
-        bFlavor.setText("Flavors: " + flavors);
-        bMode.setText("Mode: " + mode);
+        bSpeed.setText("Speed: " + gameOpt.speed);
+        bFlavor.setText("Flavors: " + gameOpt.flavors);
+        bMode.setText("Mode: " + gameOpt.mode);
     }
+
     // Quit current game
     public void gQuit() {
         gameKill = true;

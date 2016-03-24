@@ -2,13 +2,12 @@
 import javax.swing.*;
 import java.awt.*;
 
+public class menuBarJPanel extends JPanel {
 
-public class menuBarJPanel extends JPanel
-{   
-    imageButton bReturn, bPause, bGiveUp, bSound, bPlay, bSave, bDiscard;
+    imageButton bReturn, bPause, bGiveUp, bSound, bPlay;
     options gameOpt;
-    public menuBarJPanel (options inOpt)
-    { 
+
+    public menuBarJPanel(options inOpt) {
         super();
         setBackground(Color.LIGHT_GRAY);
         gameOpt = inOpt;
@@ -28,19 +27,13 @@ public class menuBarJPanel extends JPanel
                 "images/mBarP/iSoundOffP.png");
         bPlay = new imageButton("images/mBarP/iPlay.png",
                 "images/mBarP/iPlayP.png");
-        bDiscard = new imageButton("images/mBarP/iDiscard.png");
-        bSave = new imageButton("images/mBarP/iSave.png");
-        
-
 
         //Add standard buttons
         add(bReturn);
         add(bPause);
         add(bSound);
         add(bGiveUp);
-        add(bDiscard);
         add(bPlay);
-        add(bSave);
 
     }
 
@@ -52,23 +45,18 @@ public class menuBarJPanel extends JPanel
         bGiveUp.setVisible(false);
         bPlay.setVisible(false);
         bReturn.setVisible(false);
-        bSave.setVisible(false);
-        bDiscard.setVisible(false);
 
         switch (inStatus) {
-        case 1: {
-                bSound.setAltImage(!gameOpt.getSound());
+            case 1: {
+                bSound.setAltImage(gameOpt.getMuted());
                 bSound.setVisible(true);
-
                 bPause.setVisible(true);
                 bGiveUp.setVisible(true);
                 break;
             }
-                
+
             case 2: { // Status 2: Active options panel
                 bReturn.setVisible(true);
-                bDiscard.setVisible(true);
-                bSave.setVisible(true);
                 bPlay.setVisible(true);
                 break;
             }
@@ -93,12 +81,11 @@ public class menuBarJPanel extends JPanel
     //public boolean getPaused() {
     //    return paused;
     //}
-
     public void setMuted() {
         bSound.doClick();
     }
 
     public void setMuted(boolean muted) {
-        bSound.setAltImage(!bSound.getAltState());
+        bSound.setAltImage(muted);
     }
 }

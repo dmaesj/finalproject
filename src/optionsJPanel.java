@@ -2,9 +2,8 @@
 import javax.swing.*;
 import java.awt.*;
 
+public class optionsJPanel extends JPanel {
 
-public class optionsJPanel extends JPanel
-{   
     imageButton bMode, bSpeed, bFlavors, bSound;
     JRadioButton jrbNormal, jrbSurvival, jrbMarathon;
     ButtonGroup bgMode;
@@ -12,13 +11,11 @@ public class optionsJPanel extends JPanel
     options gameOpt;
 
     JTextArea saved;
-    public optionsJPanel (options inOptions)
-    {
-        super();  
-        gameOpt = inOptions;
-        gameOpt.getOptions();
-        
-        
+
+    public optionsJPanel(options inOpt) {
+        super();
+        gameOpt = inOpt;
+
         //Initialize imageButtons
         bMode = new imageButton("images/optionsP/iMode.png");
         bSpeed = new imageButton("images/optionsP/iSpeed.png");
@@ -27,7 +24,6 @@ public class optionsJPanel extends JPanel
                 "images/optionsP/iSoundEnP.png",
                 "images/optionsP/iSoundDis.png",
                 "images/optionsP/iSoundDisP.png");
-  
 
         System.out.println("Initializing optionsP");
 
@@ -39,30 +35,14 @@ public class optionsJPanel extends JPanel
         bgMode.add(jrbNormal);
         bgMode.add(jrbSurvival);
         bgMode.add(jrbMarathon);
-        
-        switch (gameOpt.getMode()) {
-            case 1: {
-                jrbNormal.setSelected(true);
-                break;
-            }
-            case 2: {
-                jrbSurvival.setSelected(true);
-                break;
-            }
-            case 3: {
-                jrbMarathon.setSelected(true);
-                break;
-            }
-        }
-        
+
         //Initialize Sliders
         jsSpeed = new optionsSlider(JSlider.HORIZONTAL, 1, 5, gameOpt.getSpeed(), 1);
-        jsFlavors = new optionsSlider(JSlider.HORIZONTAL, 1, 5, gameOpt.getFlavor(), 1);
-        
+        jsFlavors = new optionsSlider(JSlider.HORIZONTAL, 1, 5, gameOpt.getFlavors(), 1);
+
         saved = new JTextArea("Options Saved...");
         saved.setVisible(false);
-        
-        
+
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 1;
@@ -87,42 +67,16 @@ public class optionsJPanel extends JPanel
         add(jsFlavors, c);
         c.gridy = 6;
         add(bSound, c);
-        
+
         setOptionScreen();
-        
+
     }
-    
-    
-    //Save changes locally
-    public void setAll() {
-        gameOpt.setSpeed(jsSpeed.getValue());
-        gameOpt.setFlavor(jsFlavors.getValue());
-        if (jrbNormal.isSelected()) {
-            gameOpt.setMode(1);
-        }
-        else if (jrbSurvival.isSelected()) {
-            gameOpt.setMode(2);
-        }
-        else {
-            gameOpt.setMode(3);;
-        }   
-        gameOpt.setSound(!bSound.altState);
-        gameOpt.storeOptions();
-    }
-    
-        public void setMuted() {
-        boolean bool = !gameOpt.getSound();
-        
-        gameOpt.setSound(bool);
-        bSound.setAltImage(!bool);
-        
-    }
-        
-    // Set slider values
+
+    // Set values to values from xml
     public void setOptionScreen() {
         jsSpeed.setValue(gameOpt.getSpeed());
-        jsFlavors.setValue(gameOpt.getFlavor());
-        
+        jsFlavors.setValue(gameOpt.getFlavors());
+
         switch (gameOpt.getMode()) {
             case 1: {
                 jrbNormal.setSelected(true);
@@ -138,9 +92,8 @@ public class optionsJPanel extends JPanel
             }
         }
 
-        bSound.setAltImage(!gameOpt.getSound());
+        bSound.setAltImage(gameOpt.getMuted());
 
     }
-    
 
 }
