@@ -9,16 +9,16 @@
  * @author DJ
  */
 public class options {
-    
-    int     mode;
-    int     speed;
-    int     flavor;
-    boolean sound;
-    
-    public options ()
-        {
 
-        }
+    int mode;
+    int speed;
+    int flavors;
+    boolean muted;
+
+    public options() {
+
+    }
+
     //==========================================================================
     public int getMode() {
         return this.mode;
@@ -27,6 +27,7 @@ public class options {
     public void setMode(int mode) {
         this.mode = mode;
     }
+
     //==========================================================================
     public int getSpeed() {
         return this.speed;
@@ -35,54 +36,50 @@ public class options {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
     //==========================================================================
-    public int getFlavor() {
-        return this.flavor;
+    public int getFlavors() {
+        return this.flavors;
     }
 
-    public void setFlavor(int flavor) {
-        this.flavor = flavor;
-    }
-    //==========================================================================
-    public boolean getSound() {
-        return this.sound;
-    }
-
-    public void setSound(boolean sound) {
-        this.sound = sound;
+    public void setFlavors(int flavors) {
+        this.flavors = flavors;
     }
 
     //==========================================================================
-
-    public void restoreDefaults() {
-        this.mode   = 1;
-        this.speed  = 2;
-        this.flavor = 3;
-        this.sound  = true;
-        this.storeOptions();
+    public boolean getMuted() {
+        return this.muted;
     }
-        
+
+    public void setMuted() {
+        muted = !muted;
+    }
+
+    public void setMuted(boolean muted) {
+        this.muted = muted;
+    }
+
     public void storeOptions() {
-        xmlRW xr = new xmlRW();
-        
+        XML_240 xr = new XML_240();
+
         xr.openWriterXML("Options.xml");
-                xr.writeObject(this.mode);
-                xr.writeObject(this.speed);
-                xr.writeObject(this.flavor);
-                xr.writeObject(this.sound);
+        xr.writeObject(mode);
+        xr.writeObject(speed);
+        xr.writeObject(flavors);
+        xr.writeObject(muted);
         xr.closeWriterXML();
-    }    
+    }
 
     public void getOptions() {
-        xmlRW xr = new xmlRW();
-        
+        XML_240 xr = new XML_240();
+
         xr.openReaderXML("Options.xml");
-                this.mode   = (int)xr.ReadObject();
-                this.speed  = (int)xr.ReadObject();
-                this.flavor = (int)xr.ReadObject();
-                this.sound  = (boolean)xr.ReadObject();
-        xr.closeReaderXML();  
-                
-    }  
-    
+        mode = (int) xr.ReadObject();
+        speed = (int) xr.ReadObject();
+        flavors = (int) xr.ReadObject();
+        muted = (boolean) xr.ReadObject();
+        xr.closeReaderXML();
+
+    }
+
 }

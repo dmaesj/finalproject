@@ -2,8 +2,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.event.*;
 
-public class myJPanel extends JPanel implements ActionListener {
+public class myJPanel extends JPanel implements ActionListener, ChangeListener {
 
     instJPanel instP;
     scoresJPanel scoresP;
@@ -13,7 +14,6 @@ public class myJPanel extends JPanel implements ActionListener {
     menuJPanel menuP;
     menuBarJPanel mBarP;
     options gameOptions;
-    JLabel sizeLabel;
 
     public myJPanel() {
         super();
@@ -21,8 +21,8 @@ public class myJPanel extends JPanel implements ActionListener {
         //Initialize Options
         gameOptions = new options();
         gameOptions.getOptions();
-        
-    //Initialize Panels        
+
+        //Initialize Panels        
         instP = new instJPanel();
         scoresP = new scoresJPanel();
         creditsP = new creditsJPanel();
@@ -30,9 +30,7 @@ public class myJPanel extends JPanel implements ActionListener {
         gameP = new gameJPanel(gameOptions);
         menuP = new menuJPanel();
         mBarP = new menuBarJPanel(gameOptions);
-        
 
-        
         //Add Listeners
         menuP.bGame.addActionListener(this);
         menuP.bOptions.addActionListener(this);
@@ -45,11 +43,14 @@ public class myJPanel extends JPanel implements ActionListener {
         mBarP.bPlay.addActionListener(this);
         mBarP.bPause.addActionListener(this);
         mBarP.bSound.addActionListener(this);
-        mBarP.bSave.addActionListener(this);
-        mBarP.bDiscard.addActionListener(this);
- 
+
+        optionsP.jrbMarathon.addActionListener(this);
+        optionsP.jrbNormal.addActionListener(this);
+        optionsP.jrbSurvival.addActionListener(this);
         optionsP.bSound.addActionListener(this);
-        
+        optionsP.jsFlavors.addChangeListener(this);
+        optionsP.jsSpeed.addChangeListener(this);
+
         //Add panels
         switchPanel("menu");
     }
@@ -124,56 +125,48 @@ public class myJPanel extends JPanel implements ActionListener {
             gameP.gQuit();
             switchPanel("menu");
         }
-        
-        if (obj == menuP.bOptions){
-           
-           mBarP.setVisButtons(2);
-           optionsP.saved.setVisible(false);
-           switchPanel("options");
-        }
-        
-        if (obj == mBarP.bDiscard) {
-            switchPanel("menu");
-            gameOptions.restoreDefaults();
-            gameOptions.getOptions();
-            optionsP.setOptionScreen();
-        }
-        
-        if (obj == mBarP.bPlay || obj == menuP.bGame){
-           switchPanel("game");
-           mBarP.setVisButtons(1);
-           gameP.setGameOptions();
-           gameP.updateButtonText();
 
+        if (obj == menuP.bOptions) {
+            mBarP.setVisButtons(2);
+            switchPanel("options");
         }
-        
-        boolean bool;
+
+        if (obj == mBarP.bPlay || obj == menuP.bGame) {
+            switchPanel("game");
+            mBarP.setVisButtons(1);
+            gameP.updateButtonText();
+        }
+
         // Toggles pause status
         if (obj == mBarP.bPause) {
-            
-            bool = (!(gameP.getGameState()));
-
-            mBarP.bPause.setAltImage(bool);
-            gameP.setGamePaused(bool);
+            mBarP.bPause.setAltImage();
+            gameP.setGamePaused();
         }
         // Toggles mute
-        if (obj == mBarP.bSound) {
-            bool = (!(gameP.isMuted()));
-            
-            optionsP.setMuted();
-            mBarP.bSound.setAltImage(bool);
+        if (obj == mBarP.bSound || obj == optionsP.bSound) {
+            gameOptions.setMuted();
+            mBarP.bSound.setAltImage();
+            optionsP.bSound.setAltImage();
+        }
+        if (obj == optionsP.jrbNormal){
+            gameOptions.setMode(1);
+        }
+        if (obj == optionsP.jrbSurvival){
+            gameOptions.setMode(2);
+        }
+        if (obj == optionsP.jrbMarathon){
+            gameOptions.setMode(3);
+        }
+    }
 
+    @Override
+    public void stateChanged(ChangeEvent ce) {
+        Object source = ce.getSource();
+        if (source == optionsP.jsFlavors){
+            gameOptions.setFlavors(optionsP.jsFlavors.getValue());
         }
-        // Save optionsP options to gameP
-        if (obj == mBarP.bSave) {
-            optionsP.setAll();
-            gameOptions.storeOptions();
-            optionsP.saved.setVisible(true);
+        if (source == optionsP.jsSpeed){
+            gameOptions.setSpeed(optionsP.jsSpeed.getValue());
         }
-        
-        if (obj == optionsP.bSound) {
-            optionsP.bSound.setAltImage(!optionsP.bSound.getAltState());
-        }
-        
     }
 }
