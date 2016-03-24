@@ -1,5 +1,3 @@
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.*;
 
 public class gameJPanel extends JPanel 
@@ -74,7 +72,7 @@ public class gameJPanel extends JPanel
         add(cone);
         cone.setBounds(x, y, cone.getWidth(), cone.getHeight());
         flavor1.setBounds((x + cone.getHCenter() - flavor1.getHCenter()), y - flavor1.getHeight() + 30, flavor1.getWidth(), flavor1.getHeight());
-        flavor2.setBounds((x + flavor1.getHCenter() - flavor2.getHCenter()), y - - flavor1.getHeight() - flavor2.getHeight() + 30, flavor2.getWidth(), flavor2.getHeight());
+        flavor2.setBounds((x + cone.getHCenter() - flavor2.getHCenter()), y - flavor1.getHeight() - flavor2.getHeight() + 150, flavor2.getWidth(), flavor2.getHeight());
     }
     
     //Marathon Game Loop
