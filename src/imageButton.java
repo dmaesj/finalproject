@@ -3,7 +3,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class imageButton extends JButton {
-    
+
     public boolean altState = false;
     private ImageIcon iReleased, iPressed, i2Released, i2Pressed;
 
@@ -65,9 +65,8 @@ public class imageButton extends JButton {
         }
 
     }
-    
-    public boolean getAltState() 
-    {
+
+    public boolean getAltState() {
         return this.altState;
     }
 
