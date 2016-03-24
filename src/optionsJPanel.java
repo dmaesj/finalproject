@@ -1,20 +1,24 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-public class optionsJPanel extends JPanel implements ActionListener, ChangeListener {
 
+public class optionsJPanel extends JPanel
+{   
     imageButton bMode, bSpeed, bFlavors, bSound;
     JRadioButton jrbNormal, jrbSurvival, jrbMarathon;
     ButtonGroup bgMode;
     optionsSlider jsSpeed, jsFlavors;
+    options gameOpt;
 
-    public optionsJPanel() {
-        super();
+    JTextArea saved;
+    public optionsJPanel (options inOptions)
+    {
+        super();  
+        gameOpt = inOptions;
+        gameOpt.getOptions();
+        
+        
         //Initialize imageButtons
         bMode = new imageButton("images/optionsP/iMode.png");
         bSpeed = new imageButton("images/optionsP/iSpeed.png");
@@ -23,7 +27,7 @@ public class optionsJPanel extends JPanel implements ActionListener, ChangeListe
                 "images/optionsP/iSoundEnP.png",
                 "images/optionsP/iSoundDis.png",
                 "images/optionsP/iSoundDisP.png");
-        bSound.addActionListener(this);
+  
 
         System.out.println("Initializing optionsP");
 
@@ -35,17 +39,30 @@ public class optionsJPanel extends JPanel implements ActionListener, ChangeListe
         bgMode.add(jrbNormal);
         bgMode.add(jrbSurvival);
         bgMode.add(jrbMarathon);
-
-        jrbNormal.addActionListener(this);
-        jrbSurvival.addActionListener(this);
-        jrbMarathon.addActionListener(this);
-        checkModeButton();
+        
+        switch (gameOpt.getMode()) {
+            case 1: {
+                jrbNormal.setSelected(true);
+                break;
+            }
+            case 2: {
+                jrbSurvival.setSelected(true);
+                break;
+            }
+            case 3: {
+                jrbMarathon.setSelected(true);
+                break;
+            }
+        }
+        
         //Initialize Sliders
-        jsSpeed = new optionsSlider(JSlider.HORIZONTAL, 1, 5, app.speed, 1);
-        jsFlavors = new optionsSlider(JSlider.HORIZONTAL, 1, 5, app.flavors, 1);
-        jsSpeed.addChangeListener(this);
-        jsFlavors.addChangeListener(this);
-
+        jsSpeed = new optionsSlider(JSlider.HORIZONTAL, 1, 5, gameOpt.getSpeed(), 1);
+        jsFlavors = new optionsSlider(JSlider.HORIZONTAL, 1, 5, gameOpt.getFlavor(), 1);
+        
+        saved = new JTextArea("Options Saved...");
+        saved.setVisible(false);
+        
+        
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 1;
@@ -70,70 +87,60 @@ public class optionsJPanel extends JPanel implements ActionListener, ChangeListe
         add(jsFlavors, c);
         c.gridy = 6;
         add(bSound, c);
-
+        
+        setOptionScreen();
+        
     }
-
-    public void update() {
-        setMuted(!app.muted);
-        jsSpeed.setValue(app.speed);
-        jsFlavors.setValue(app.flavors);
-        checkModeButton();
+    
+    
+    //Save changes locally
+    public void setAll() {
+        gameOpt.setSpeed(jsSpeed.getValue());
+        gameOpt.setFlavor(jsFlavors.getValue());
+        if (jrbNormal.isSelected()) {
+            gameOpt.setMode(1);
+        }
+        else if (jrbSurvival.isSelected()) {
+            gameOpt.setMode(2);
+        }
+        else {
+            gameOpt.setMode(3);;
+        }   
+        gameOpt.setSound(!bSound.altState);
+        gameOpt.storeOptions();
     }
-
-    public void setMuted(boolean isMuted) {
-        bSound.setAltImage(isMuted);
-        app.muted = isMuted;
+    
+        public void setMuted() {
+        boolean bool = !gameOpt.getSound();
+        
+        gameOpt.setSound(bool);
+        bSound.setAltImage(!bool);
+        
     }
-
-    public void checkModeButton() {
-        switch (app.mode) {
-            case app.MODE_NORMAL: {
+        
+    // Set slider values
+    public void setOptionScreen() {
+        jsSpeed.setValue(gameOpt.getSpeed());
+        jsFlavors.setValue(gameOpt.getFlavor());
+        
+        switch (gameOpt.getMode()) {
+            case 1: {
                 jrbNormal.setSelected(true);
                 break;
             }
-            case app.MODE_SURVIVAL: {
+            case 2: {
                 jrbSurvival.setSelected(true);
                 break;
             }
-            case app.MODE_MARATHON: {
+            case 3: {
                 jrbMarathon.setSelected(true);
                 break;
             }
         }
-    }
 
-    //Reset Defaults
-    public void setDefaults() {
-        app.speed = app.DEFAULT_SPEED;
-        app.flavors = app.DEFAULT_FLAVORS;
-        app.mode = app.DEFAULT_MODE;
-        app.muted = app.DEFAULT_MUTED;
-        update();
-    }
+        bSound.setAltImage(!gameOpt.getSound());
 
-    @Override
-    public void actionPerformed(ActionEvent event) {
-        Object source = event.getSource();
-        if (source == bSound) {
-            //toggle mute
-            setMuted(!app.muted);
-        } //set app mode based on which button is pressed.
-        else if (source == jrbNormal) {
-            app.mode = app.MODE_NORMAL;
-        } else if (source == jrbSurvival) {
-            app.mode = app.MODE_SURVIVAL;
-        } else if (source == jrbMarathon) {
-            app.mode = app.MODE_MARATHON;
-        }
     }
+    
 
-    @Override
-    public void stateChanged(ChangeEvent ce) {
-        Object source = ce.getSource();
-        if (source == jsSpeed) {
-            app.speed = jsSpeed.getValue();
-        } else if (source == jsFlavors) {
-            app.flavors = jsFlavors.getValue();
-        }
-    }
 }

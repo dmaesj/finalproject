@@ -12,20 +12,27 @@ public class myJPanel extends JPanel implements ActionListener {
     gameJPanel gameP;
     menuJPanel menuP;
     menuBarJPanel mBarP;
+    options gameOptions;
     JLabel sizeLabel;
 
     public myJPanel() {
         super();
         setLayout(new BorderLayout());
-        //Initialize Panels
-
+        //Initialize Options
+        gameOptions = new options();
+        gameOptions.getOptions();
+        
+    //Initialize Panels        
         instP = new instJPanel();
         scoresP = new scoresJPanel();
         creditsP = new creditsJPanel();
-        optionsP = new optionsJPanel();
-        gameP = new gameJPanel();
+        optionsP = new optionsJPanel(gameOptions);
+        gameP = new gameJPanel(gameOptions);
         menuP = new menuJPanel();
-        mBarP = new menuBarJPanel();
+        mBarP = new menuBarJPanel(gameOptions);
+        
+
+        
         //Add Listeners
         menuP.bGame.addActionListener(this);
         menuP.bOptions.addActionListener(this);
@@ -36,6 +43,13 @@ public class myJPanel extends JPanel implements ActionListener {
         mBarP.bGiveUp.addActionListener(this);
         mBarP.bReturn.addActionListener(this);
         mBarP.bPlay.addActionListener(this);
+        mBarP.bPause.addActionListener(this);
+        mBarP.bSound.addActionListener(this);
+        mBarP.bSave.addActionListener(this);
+        mBarP.bDiscard.addActionListener(this);
+ 
+        optionsP.bSound.addActionListener(this);
+        
         //Add panels
         switchPanel("menu");
     }
@@ -53,7 +67,6 @@ public class myJPanel extends JPanel implements ActionListener {
             remove(mBarP);
         }
         if (state.equals("game")) {
-            gameP.update();
             add(gameP, "Center");
         } else {
             remove(gameP);
@@ -74,7 +87,6 @@ public class myJPanel extends JPanel implements ActionListener {
             remove(creditsP);
         }
         if (state.equals("options")) {
-            optionsP.update();
             add(optionsP, "Center");
         } else {
             remove(optionsP);
@@ -94,36 +106,74 @@ public class myJPanel extends JPanel implements ActionListener {
 
         if (obj == menuP.bInst) {
             switchPanel("instructions");
-            mBarP.setVisButtons(app.OTHERPANEL);
+            mBarP.setVisButtons(3);
         }
 
         if (obj == menuP.bCredits) {
             switchPanel("credits");
-            mBarP.setVisButtons(app.OTHERPANEL);
+            mBarP.setVisButtons(3);
         }
 
         if (obj == menuP.bScores) {
             switchPanel("scores");
-            mBarP.setVisButtons(app.OTHERPANEL);
+            mBarP.setVisButtons(3);
 
         }
 
         if (obj == mBarP.bGiveUp) {
             gameP.gQuit();
-            app.paused = false;
             switchPanel("menu");
         }
-
-        if (obj == menuP.bOptions) {
-            optionsP.update();
-            mBarP.setVisButtons(app.OPTIONSPANEL);
-            switchPanel("options");
+        
+        if (obj == menuP.bOptions){
+           
+           mBarP.setVisButtons(2);
+           optionsP.saved.setVisible(false);
+           switchPanel("options");
         }
-
-        if (obj == mBarP.bPlay || obj == menuP.bGame) {
-            gameP.update();
-            switchPanel("game");
-            mBarP.setVisButtons(app.GAMEPANEL);
+        
+        if (obj == mBarP.bDiscard) {
+            switchPanel("menu");
+            gameOptions.restoreDefaults();
+            gameOptions.getOptions();
+            optionsP.setOptionScreen();
         }
+        
+        if (obj == mBarP.bPlay || obj == menuP.bGame){
+           switchPanel("game");
+           mBarP.setVisButtons(1);
+           gameP.setGameOptions();
+           gameP.updateButtonText();
+
+        }
+        
+        boolean bool;
+        // Toggles pause status
+        if (obj == mBarP.bPause) {
+            
+            bool = (!(gameP.getGameState()));
+
+            mBarP.bPause.setAltImage(bool);
+            gameP.setGamePaused(bool);
+        }
+        // Toggles mute
+        if (obj == mBarP.bSound) {
+            bool = (!(gameP.isMuted()));
+            
+            optionsP.setMuted();
+            mBarP.bSound.setAltImage(bool);
+
+        }
+        // Save optionsP options to gameP
+        if (obj == mBarP.bSave) {
+            optionsP.setAll();
+            gameOptions.storeOptions();
+            optionsP.saved.setVisible(true);
+        }
+        
+        if (obj == optionsP.bSound) {
+            optionsP.bSound.setAltImage(!optionsP.bSound.getAltState());
+        }
+        
     }
 }
