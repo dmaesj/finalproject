@@ -3,7 +3,8 @@ import java.awt.*;
 import javax.swing.*;
 
 public class imageButton extends JButton {
-
+    
+    public boolean altState = false;
     private ImageIcon iReleased, iPressed, i2Released, i2Pressed;
 
     imageButton(String imagePath1) {
@@ -33,9 +34,11 @@ public class imageButton extends JButton {
         if (getIcon() == i2Released) {
             setIcon(iReleased);
             setPressedIcon(iPressed);
+            altState = true;
         } else {
             setIcon(i2Released);
             setPressedIcon(i2Pressed);
+            altState = false;
         }
     }
 
@@ -43,9 +46,11 @@ public class imageButton extends JButton {
         if (alt) {
             setIcon(i2Released);
             setPressedIcon(i2Pressed);
+            altState = true;
         } else {
             setIcon(iReleased);
             setPressedIcon(iPressed);
+            altState = false;
         }
     }
 
@@ -59,6 +64,11 @@ public class imageButton extends JButton {
             iPressed = new ImageIcon(inPath);
         }
 
+    }
+    
+    public boolean getAltState() 
+    {
+        return this.altState;
     }
 
     public void addImageIcon(boolean alt, String inPath, String inPath2) {

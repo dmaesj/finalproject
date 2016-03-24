@@ -1,18 +1,18 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class menuBarJPanel extends JPanel implements ActionListener {
 
-    imageButton bReturn, bPause, bGiveUp, bSound, bPlay;
-    myJPanel mainPanel;
-
-    public menuBarJPanel() {
+public class menuBarJPanel extends JPanel
+{   
+    imageButton bReturn, bPause, bGiveUp, bSound, bPlay, bSave, bDiscard;
+    options gameOpt;
+    public menuBarJPanel (options inOpt)
+    { 
         super();
         setBackground(Color.LIGHT_GRAY);
-        mainPanel = (myJPanel) SwingUtilities.getRoot(this);
+        gameOpt = inOpt;
+
         //Initialize buttons
         bReturn = new imageButton("images/mBarP/iMenu.png",
                 "images/mBarP/iMenuP.png");
@@ -28,17 +28,19 @@ public class menuBarJPanel extends JPanel implements ActionListener {
                 "images/mBarP/iSoundOffP.png");
         bPlay = new imageButton("images/mBarP/iPlay.png",
                 "images/mBarP/iPlayP.png");
+        bDiscard = new imageButton("images/mBarP/iDiscard.png");
+        bSave = new imageButton("images/mBarP/iSave.png");
+        
 
-        //Add listeners
-        bPause.addActionListener(this);
-        bSound.addActionListener(this);
 
         //Add standard buttons
         add(bReturn);
         add(bPause);
         add(bSound);
         add(bGiveUp);
+        add(bDiscard);
         add(bPlay);
+        add(bSave);
 
     }
 
@@ -50,23 +52,27 @@ public class menuBarJPanel extends JPanel implements ActionListener {
         bGiveUp.setVisible(false);
         bPlay.setVisible(false);
         bReturn.setVisible(false);
+        bSave.setVisible(false);
+        bDiscard.setVisible(false);
 
         switch (inStatus) {
-            case app.GAMEPANEL: { // Status 1: Active game panel
-                setPaused(app.paused);
-                setMuted(app.muted);
+        case 1: {
+                bSound.setAltImage(!gameOpt.getSound());
                 bSound.setVisible(true);
 
                 bPause.setVisible(true);
                 bGiveUp.setVisible(true);
                 break;
             }
-            case app.OPTIONSPANEL: { // Status 2: Active options panel
+                
+            case 2: { // Status 2: Active options panel
                 bReturn.setVisible(true);
+                bDiscard.setVisible(true);
+                bSave.setVisible(true);
                 bPlay.setVisible(true);
                 break;
             }
-            case app.OTHERPANEL: { // Status 3: Placehoder for other panels
+            case 3: { // Status 3: Placehoder for other panels
                 bReturn.setVisible(true);
             }
             default: {
@@ -81,35 +87,18 @@ public class menuBarJPanel extends JPanel implements ActionListener {
     }
 
     public void setPaused(boolean isPaused) {
-        app.paused = isPaused;
         bPause.setAltImage(isPaused);
     }
 
-    public boolean getPaused() {
-        return app.paused;
-    }
+    //public boolean getPaused() {
+    //    return paused;
+    //}
 
     public void setMuted() {
         bSound.doClick();
     }
 
     public void setMuted(boolean muted) {
-        app.muted = muted;
-        bSound.setAltImage(app.muted);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent event) {
-        Object obj = event.getSource();
-        // Toggles pause status
-        if (obj == bPause) {
-            app.paused = !app.paused;
-            bPause.setAltImage();
-        }
-        // Toggles mute
-        if (obj == bSound) {
-            app.muted = !app.muted;
-            bSound.setAltImage();
-        }
+        bSound.setAltImage(!bSound.getAltState());
     }
 }
