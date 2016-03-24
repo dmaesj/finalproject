@@ -102,7 +102,9 @@ public class myJPanel extends JPanel implements ActionListener, ChangeListener {
         Object obj = event.getSource();
 
         if (obj == mBarP.bReturn) {
+            gameOptions.storeOptions();
             switchPanel("menu");
+            
         }
 
         if (obj == menuP.bInst) {
@@ -135,6 +137,7 @@ public class myJPanel extends JPanel implements ActionListener, ChangeListener {
             switchPanel("game");
             mBarP.setVisButtons(1);
             gameP.updateButtonText();
+            gameOptions.storeOptions();
         }
 
         // Toggles pause status
