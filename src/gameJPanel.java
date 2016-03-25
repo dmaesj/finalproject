@@ -55,7 +55,7 @@ public class gameJPanel extends JPanel implements MouseMotionListener , ActionLi
         flavor2 = new gameSprite("images/gameP/flavor2.png");
         flavor1 = new gameSprite("images/gameP/flavor1.png");
         cone = new gameSprite("images/gameP/coneCut.png");
-        //coneX = (int)(panelWidth / 2) - cone.getXCenter();
+        //coneX = (int)(panelWidth / 2) - cone.getXCenter(); // Will add when the get panel size is working
         //coneY = panelHeight - cone.getHeight();
         add(flavor2);
         add(flavor1);
