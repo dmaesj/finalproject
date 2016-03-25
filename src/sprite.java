@@ -9,15 +9,16 @@ import javax.swing.JButton;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Eric
  */
 public abstract class sprite extends JButton {
+
     Point mouseLoc;
     ImageIcon icon;
-    public sprite(String imagePath){
+
+    public sprite(String imagePath) {
         super();
         mouseLoc = MouseInfo.getPointerInfo().getLocation();
         icon = new ImageIcon(imagePath);
@@ -25,12 +26,13 @@ public abstract class sprite extends JButton {
         setBorderPainted(false);
         setContentAreaFilled(false);
         setFocusPainted(false);
-        
+
     }
+
     // Calls move functions for drawing
     public abstract void update();
-    
-    public void setPosition(int x, int y){
+
+    public void setPosition(int x, int y) {
         setBounds(x, y, getBounds().width, getBounds().height);
     }
 }

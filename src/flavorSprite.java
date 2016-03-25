@@ -8,19 +8,22 @@
  *
  * @author Eric
  */
-public class flavorSprite extends sprite{
+public class flavorSprite extends sprite {
+
     int xPos;
     boolean xSet = false;
-    public flavorSprite(String imagePath){
+
+    public flavorSprite(String imagePath) {
         super(imagePath);
     }
+
     @Override
     public void update() {
-        if (!xSet){
+        if (!xSet) {
             xPos = (int) (Math.round(Math.random() * getParent().getSize().width));
             setBounds(xPos, 0, icon.getIconWidth(), icon.getIconHeight());
             xSet = true;
         }
-        setPosition(xPos, getBounds().y+7);
+        setPosition(xPos, getBounds().y + 7);
     }
 }
