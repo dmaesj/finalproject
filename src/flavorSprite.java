@@ -20,7 +20,7 @@ public class flavorSprite extends sprite {
     @Override
     public void update() {
         if (!xSet) {
-            xPos = (int) (Math.round(Math.random() * getParent().getSize().width));
+            xPos = (int) (Math.round(Math.random() * (getParent().getSize().width - icon.getIconWidth() / 2)));
             setBounds(xPos, 0, icon.getIconWidth(), icon.getIconHeight());
             xSet = true;
         }

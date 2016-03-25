@@ -1,17 +1,17 @@
-
-import java.awt.*;
-
-public class coneSprite extends sprite {
+public class coneSprite extends sprite{
 
     coneSprite(String imagePath) {
         super(imagePath);
-        setBounds(mouseLoc.x + (icon.getIconWidth() / 2), mouseLoc.y,
+        setBounds(icon.getIconWidth() / 2, 0,
                 icon.getIconWidth(), icon.getIconHeight());
+        
     }
 
     @Override
     public void update() {
-        mouseLoc = MouseInfo.getPointerInfo().getLocation();
+        mouseLoc = getParent().getMousePosition();
+        if (mouseLoc == null)
+            return;
         int yPos = getParent().getSize().height - icon.getIconHeight();
         int delta = 0;
         delta = mouseLoc.x - (getBounds().x + (getBounds().width / 2));
@@ -23,5 +23,4 @@ public class coneSprite extends sprite {
         }
         setPosition(getBounds().x + delta, yPos);
     }
-
 }

@@ -20,7 +20,6 @@ public abstract class sprite extends JButton {
 
     public sprite(String imagePath) {
         super();
-        mouseLoc = MouseInfo.getPointerInfo().getLocation();
         icon = new ImageIcon(imagePath);
         setIcon(icon);
         setBorderPainted(false);
