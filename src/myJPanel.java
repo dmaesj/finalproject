@@ -69,6 +69,7 @@ public class myJPanel extends JPanel implements ActionListener, ChangeListener {
         }
         if (state.equals("game")) {
             add(gameP, "Center");
+            gameP.gameStart();
         } else {
             remove(gameP);
         }
@@ -137,7 +138,7 @@ public class myJPanel extends JPanel implements ActionListener, ChangeListener {
             switchPanel("game");
             mBarP.setVisButtons(1);
             gameOptions.storeOptions();
-            gameP.gameStart();
+                
         }
 
         // Toggles pause status

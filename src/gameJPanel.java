@@ -2,23 +2,28 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class gameJPanel extends JPanel implements MouseMotionListener , ActionListener {
+public class gameJPanel extends JPanel implements ActionListener {
     Point mouseLoc;
     private boolean gameStatePaused = false;
     private boolean gameKill = false;
+    String[] flavorIcons = {"images/gameP/flavor1.png", 
+        "images/gameP/flavor2.png", 
+        "images/gameP/flavor3.png", 
+        "images/gameP/flavor4.png", 
+        "images/gameP/flavor5.png"};
     JButton bSpeed, bMode, bFlavor;
     options gameOpt;
-    gameSprite flavor1, flavor2, flavor3, flavor4, flavor5, cone;
-    int panelHeight = 0, panelWidth = 0;
-    int coneX = 500, coneY = 500;
+    coneSprite cone;
+    flavorSprite[] flavors;
+    int flavorCount = 0, flavorDelay = 200;
     Timer mouseCycle;                                                                                                                                                                                                                                                                                 
     public gameJPanel(options inOpt) {
         super();
-        mouseLoc = new Point(250,500);
         gameOpt = inOpt;
         setLayout(null); 
+        mouseLoc = MouseInfo.getPointerInfo().getLocation();
+        flavors = new flavorSprite[15];
     }
-    
     // starts game loops
     public void gameStart() {
         switch (gameOpt.mode) {
@@ -51,40 +56,25 @@ public class gameJPanel extends JPanel implements MouseMotionListener , ActionLi
     
     //Normal Game Loop
     public void gameNormal() {
-        addMouseMotionListener(this);
-        flavor2 = new gameSprite("images/gameP/flavor2.png");
-        flavor1 = new gameSprite("images/gameP/flavor1.png");
-        cone = new gameSprite("images/gameP/coneCut.png");
-        //coneX = (int)(panelWidth / 2) - cone.getXCenter(); // Will add when the get panel size is working
-        //coneY = panelHeight - cone.getHeight();
-        add(flavor2);
-        add(flavor1);
+        mouseLoc = MouseInfo.getPointerInfo().getLocation();
+        cone = new coneSprite("images/gameP/coneCut.png");
         add(cone);
-        cone.setBounds(coneX, coneY, cone.getWidth(), cone.getHeight());
-        flavor1.setBounds((coneX + cone.getYCenter() - flavor1.getXCenter()), coneY - flavor1.getHeight() + 30, flavor1.getWidth(), flavor1.getHeight());
-        flavor2.setBounds((coneX + cone.getYCenter() - flavor2.getXCenter()), coneY - flavor1.getHeight() - flavor2.getHeight() + 150, flavor2.getWidth(), flavor2.getHeight());
-        if (cone.getX() != mouseLoc.getX()) {
-            moveCone();
-        }
+        
+        
     }
     
-    public void moveCone() {
-        //Fine tuned adjustments
-        if (cone.getXCenterLoc() <= (int)mouseLoc.getX() + 10 && (int)mouseLoc.getX() - 10 <= cone.getXCenterLoc()) {
-            if (cone.getXCenterLoc() + 10 > (int)mouseLoc.getX()) {
-                cone.setBounds(coneX-=(10 - (int)(mouseLoc.getX() - cone.getXCenterLoc())), coneY, cone.getWidth(), cone.getHeight());
-            }
-            else if ((int)mouseLoc.getX() - 10 > cone.getXCenterLoc()) {
-                    cone.setBounds(coneX+=(10 - (int)(mouseLoc.getX() - cone.getXCenterLoc())), coneY, cone.getWidth(), cone.getHeight());
-            }
+    public void update() {
+        cone.update();
+        for(int i=0; i<flavorCount; i++)
+            flavors[i].update();
+        flavorDelay--;
+        if (flavorDelay == 0 && flavorCount < 14){
+            int flavor = (int) Math.round(Math.random()*4);
+            flavors[flavorCount] = new flavorSprite(flavorIcons[flavor]);
+            add(flavors[flavorCount]);
+            flavorCount++;
+            flavorDelay = 200;
         }
-        //Gross adjustments
-        else if (cone.getXCenterLoc() > mouseLoc.getX()) {
-            cone.setBounds((coneX-=10), coneY, cone.getWidth(), cone.getHeight());
-        }
-        else if (cone.getXCenterLoc() < mouseLoc.getX()) {
-            cone.setBounds((coneX+=10), coneY, cone.getWidth(), cone.getHeight()); 
-        } 
     }
     
     //Marathon Game Loop
@@ -98,21 +88,10 @@ public class gameJPanel extends JPanel implements MouseMotionListener , ActionLi
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent event) {
-        mouseLoc = event.getPoint();
-        moveCone();
-    }
-
-    @Override
     public void actionPerformed(ActionEvent event) {
         Object obj = event.getSource();
         if (obj == mouseCycle) {
-            moveCone();     
+            update();     
         }
     }
 }
