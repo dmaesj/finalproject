@@ -136,8 +136,8 @@ public class myJPanel extends JPanel implements ActionListener, ChangeListener {
         if (obj == mBarP.bPlay || obj == menuP.bGame) {
             switchPanel("game");
             mBarP.setVisButtons(1);
-            gameP.updateButtonText();
             gameOptions.storeOptions();
+            gameP.gameStart();
         }
 
         // Toggles pause status
