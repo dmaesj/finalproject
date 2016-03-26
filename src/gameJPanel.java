@@ -17,15 +17,17 @@ public class gameJPanel extends JPanel implements ActionListener {
     options gameOpt;
     coneSprite cone;
     flavorSprite[] flavors;
-    int flavorCount = 0, flavorDelay = 200;
-    Timer mouseCycle;
-
+    int flavorCount = 0, flavorDelay = 200, lives, score = 0, time = 0;
+    Timer mouseCycle, gameCycle;
+    JTextArea stats;
     public gameJPanel(options inOpt) {
         super();
         gameOpt = inOpt;
         setLayout(null);
         mouseLoc = MouseInfo.getPointerInfo().getLocation();
         flavors = new flavorSprite[15];
+        stats = new JTextArea();
+        stats.setBackground(Color.WHITE);
     }
 
     // starts game loops
@@ -46,6 +48,8 @@ public class gameJPanel extends JPanel implements ActionListener {
         }
         mouseCycle = new Timer(10, this);
         mouseCycle.start();
+        gameCycle = new Timer(1000, this);
+        gameCycle.start();
     }
 
     public void setGamePaused() {
@@ -67,10 +71,12 @@ public class gameJPanel extends JPanel implements ActionListener {
     }
 
     //Normal Game Loop
-    public void gameNormal() {
+    public void gameNormal() { // timer count up until level complete, match random order of scoops to finish level, base speed increases each level
         mouseLoc = MouseInfo.getPointerInfo().getLocation();
         cone = new coneSprite("images/gameP/coneCut.png");
         add(cone);
+        stats.setBounds(0, 0, 300, 20);
+        add(stats);
 
     }
 
@@ -88,15 +94,33 @@ public class gameJPanel extends JPanel implements ActionListener {
             flavorDelay = 200;
         }
     }
+    
+    public String getTime() {
+        String curTime;
+        if (time >= 60) {
+           curTime = Integer.toString(time / 60);
+        }
+        else {
+            curTime = "00";
+        }
+        if (time % 60 < 10) {
+            curTime += (":0" + time % 60);
+        }
+        else if (time % 60 >= 10) {
+            curTime += (":" + time % 60);
+        }
+       return curTime;
+    }
 
     //Marathon Game Loop
     public void gameMarathon() {
-
+           // Timer countdown, unlimited lives, score based on scoops caught
     }
 
     //Survival Game Loop
     public void gameSurvival() {
-
+            // No visible timer, score based on time alive, scoops caught, if a scoop is missed you lose
+            // once scoops hit top, clear cones and continue, gets progressively faster
     }
 
     @Override
@@ -104,6 +128,11 @@ public class gameJPanel extends JPanel implements ActionListener {
         Object obj = event.getSource();
         if (obj == mouseCycle) {
             update();
+        }
+        if (obj == gameCycle) {
+            time++;
+            stats.setText("Score: " + score + "     Elapsed Time: " + getTime());
+            
         }
     }
 }
