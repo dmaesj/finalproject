@@ -12,7 +12,7 @@ public class flavorSprite extends sprite {
 
     int xPos;
     boolean xSet = false;
-
+    int speed = 5;
     public flavorSprite(String imagePath) {
         super(imagePath);
     }
@@ -24,6 +24,6 @@ public class flavorSprite extends sprite {
             setBounds(xPos, 0, icon.getIconWidth(), icon.getIconHeight());
             xSet = true;
         }
-        setPosition(xPos, getBounds().y + 7);
+        setPosition(xPos, getBounds().y + speed);
     }
 }

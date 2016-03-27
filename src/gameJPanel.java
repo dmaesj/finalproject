@@ -80,6 +80,27 @@ public class gameJPanel extends JPanel implements ActionListener {
 
     }
 
+    //Marathon Game Loop
+    public void gameMarathon() {
+        // Timer countdown, unlimited lives, score based on scoops caught
+        mouseLoc = MouseInfo.getPointerInfo().getLocation();
+        cone = new coneSprite("images/gameP/coneCut.png");
+        add(cone);
+        stats.setBounds(0, 0, 300, 20);
+        add(stats);
+    }
+
+    //Survival Game Loop
+    public void gameSurvival() {
+        // No visible timer, score based on time alive, scoops caught, if a scoop is missed you lose
+        // once scoops hit top, clear cones and continue, gets progressively faster
+        mouseLoc = MouseInfo.getPointerInfo().getLocation();
+        cone = new coneSprite("images/gameP/coneCut.png");
+        add(cone);
+        stats.setBounds(0, 0, 300, 20);
+        add(stats);
+    }
+    
     public void update() {
         cone.update();
         for (int i = 0; i < flavorCount; i++) {
@@ -89,6 +110,7 @@ public class gameJPanel extends JPanel implements ActionListener {
         if (flavorDelay == 0 && flavorCount < 14) {
             int flavor = (int) Math.round(Math.random() * 4);
             flavors[flavorCount] = new flavorSprite(flavorIcons[flavor]);
+            flavors[flavorCount].speed += (gameOpt.speed * 2);
             add(flavors[flavorCount]);
             flavorCount++;
             flavorDelay = 200;
@@ -111,18 +133,6 @@ public class gameJPanel extends JPanel implements ActionListener {
         }
        return curTime;
     }
-
-    //Marathon Game Loop
-    public void gameMarathon() {
-           // Timer countdown, unlimited lives, score based on scoops caught
-    }
-
-    //Survival Game Loop
-    public void gameSurvival() {
-            // No visible timer, score based on time alive, scoops caught, if a scoop is missed you lose
-            // once scoops hit top, clear cones and continue, gets progressively faster
-    }
-
     @Override
     public void actionPerformed(ActionEvent event) {
         Object obj = event.getSource();
