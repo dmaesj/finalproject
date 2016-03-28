@@ -108,7 +108,7 @@ public class gameJPanel extends JPanel implements ActionListener {
         }
         flavorDelay--;
         if (flavorDelay == 0 && flavorCount < 14) {
-            int flavor = (int) Math.round(Math.random() * 4);
+            int flavor = (int) Math.round(Math.random() * (gameOpt.flavors - 1));
             flavors[flavorCount] = new flavorSprite(flavorIcons[flavor]);
             flavors[flavorCount].speed += (gameOpt.speed * 2);
             add(flavors[flavorCount]);
