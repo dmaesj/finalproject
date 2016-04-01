@@ -1,30 +1,30 @@
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Timer;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author Eric
- */
-public class flavorSprite extends sprite {
+public class flavorSprite extends sprite implements ActionListener {
 
     int xPos;
     boolean xSet = false;
-    int speed = 5;
+    boolean moving = true;
+    int speed = 25;
     soundPlayer flavorDrop, flavorMiss;
     boolean muted;
-    public flavorSprite(String imagePath, boolean inMuted) {
-        super(imagePath);
+    int flavor;
+    Timer t;
+    
+    public flavorSprite(int inFlavor, int x, int y, boolean inMuted) {
+        super();
+        this.setIcon(getFlavor(inFlavor));
         muted = inMuted;
         flavorDrop = new soundPlayer();
         flavorMiss = new soundPlayer();
+        setBounds(x, y,
+                icon.getIconWidth(), icon.getIconHeight());
         try {
             flavorDrop.setIStream("sounds/drop.wav");
             flavorMiss.setIStream("sounds/miss.wav");
@@ -33,7 +33,21 @@ public class flavorSprite extends sprite {
         }
     }
 
-    @Override
+    public String getFlavor(int i) {
+                return "images/gameP/flavor" + (i+1) + ".png";
+    }
+    
+    public void startMoving(int inSpeed) {
+        
+        t = new Timer(60, this);
+        t.start();
+
+    }
+    
+    public void stopMoving() {
+        speed = 0;
+    }
+    
     public void update() {
         if (!xSet) {
             xPos = (int) (Math.round(Math.random() * (getParent().getSize().width - icon.getIconWidth() / 2)));
@@ -48,4 +62,12 @@ public class flavorSprite extends sprite {
             }
         }
     }
+    
+    public void actionPerformed(ActionEvent event) {
+        Object obj = event.getSource();
+
+            if (obj == t) {
+               this.setPosition(this.getBounds(). x,this.getBounds().y + this.speed );
+            }
+        }
 }

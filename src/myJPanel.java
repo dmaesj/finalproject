@@ -15,6 +15,7 @@ public class myJPanel extends JPanel implements ActionListener, ChangeListener {
     menuBarJPanel mBarP;
     options gameOptions;
 
+
     public myJPanel() {
         super();
         setLayout(new BorderLayout());

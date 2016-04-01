@@ -2,47 +2,62 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-public class gameJPanel extends JPanel implements ActionListener {
+public class gameJPanel extends JPanel implements MouseMotionListener, ActionListener {
 
-    Point mouseLoc;
     private boolean gameStatePaused = false;
     private boolean gameKill = false;
-    String[] flavorIcons = {"images/gameP/flavor1.png",
-        "images/gameP/flavor2.png",
-        "images/gameP/flavor3.png",
-        "images/gameP/flavor4.png",
-        "images/gameP/flavor5.png"};
-    JButton bSpeed, bMode, bFlavor;
+    
     options gameOpt;
+    
     coneSprite cone;
-    flavorSprite[] flavors;
-    int flavorCount = 0, flavorDelay = 200, lives, score = 0, time = 0, 
+    
+    flavorSprite flavors;
+    int flavorCount = 0, flavorDelay = 0, lives, score = 0, time = 0, 
             misses = 0, addSpeed = 0;
     double scoreMult = 1d;
-    Timer mouseCycle, gameCycle;
+    
+    Timer gameCycle;
+    
     JTextArea stats;
+    
+    int i;
+    
     public gameJPanel(options inOpt) {
         super();
         gameOpt = inOpt;
         setLayout(null);
-        mouseLoc = MouseInfo.getPointerInfo().getLocation();
-        flavors = new flavorSprite[15];
-        stats = new JTextArea();
-        stats.setBackground(Color.WHITE);
+        addMouseMotionListener(this);
     }
-
+    
+        
     // starts game loops
     public void gameStart() {
-        scoreMult = (gameOpt.speed * 1.5 + gameOpt.flavors * 1.5);
-        mouseLoc = MouseInfo.getPointerInfo().getLocation();
-        cone = new coneSprite("images/gameP/coneCut.png");
-        add(cone);
+        
+        gameKill = false;
+        stats = new JTextArea();
+        stats.setBackground(Color.WHITE);
         stats.setBounds(0, 0, 300, 20);
+        scoreMult = (gameOpt.speed * 1.5 + gameOpt.flavors * 1.5);
+        cone = new coneSprite(180, 477);
+        cone.setPosition(180, this.getHeight() - cone.getBounds().height);
+        
+                flavors = new flavorSprite(1,10, 10, false);
+                flavors.setPosition(180, 100);
+ 
+
+        add(flavors);
+        flavors.startMoving(5);
+        add(cone);
         add(stats);
+
+        
+
+        
         switch (gameOpt.mode) {
             case 1: {
                 gameNormal();
@@ -58,8 +73,6 @@ public class gameJPanel extends JPanel implements ActionListener {
                 break;
             }
         }
-        mouseCycle = new Timer(10, this);
-        mouseCycle.start();
         gameCycle = new Timer(1000, this);
         gameCycle.start();
     }
@@ -79,6 +92,7 @@ public class gameJPanel extends JPanel implements ActionListener {
 
     // Quit current game
     public void gQuit() {
+        this.removeAll();
         gameKill = true;
     }
 
@@ -98,23 +112,6 @@ public class gameJPanel extends JPanel implements ActionListener {
         // once scoops hit top, clear cones and continue, gets progressively faster
     }
     
-    public void update() {
-        cone.update();
-        for (int i = 0; i < flavorCount; i++) {
-            flavors[i].update();
-        }
-        flavorDelay--;
-        if (flavorDelay == 0 && flavorCount < 14) {
-            int flavor = (int) Math.round(Math.random() * (gameOpt.flavors - 1));
-            flavors[flavorCount] = new flavorSprite(flavorIcons[flavor], gameOpt.muted);
-            flavors[flavorCount].speed += (gameOpt.speed * 2) + addSpeed;
-            System.out.println(flavors[flavorCount].speed + "");
-            add(flavors[flavorCount]);
-            flavorCount++;
-            flavorDelay = 200;
-        }
-    }
-    
     public String getTime() {
         String curTime;
         if (time >= 60) {
@@ -131,14 +128,20 @@ public class gameJPanel extends JPanel implements ActionListener {
         }
        return curTime;
     }
+    
     @Override
     public void actionPerformed(ActionEvent event) {
         Object obj = event.getSource();
         if (!gameKill && !gameStatePaused){
-            if (obj == mouseCycle) {
-                    update();
-            }
+
             if (obj == gameCycle) {
+                System.out.println(i++);
+
+                        
+                    this.validate();
+                    this.repaint();
+                
+                
                 switch (gameOpt.mode) {
                     case 1: // Normal mode
                         time++;
@@ -159,5 +162,18 @@ public class gameJPanel extends JPanel implements ActionListener {
                 }
             }
         }
+    }
+    
+    @Override
+    public void mouseMoved(MouseEvent evt)
+    {
+    	Point pt = evt.getPoint();
+        cone.move((int)pt.getX());
+    }
+    @Override
+    public void mouseDragged(MouseEvent evt)
+    {
+    	Point pt = evt.getPoint();
+        cone.move((int)pt.getX());
     }
 }

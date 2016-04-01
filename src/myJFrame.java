@@ -3,6 +3,9 @@ import java.awt.*;
 import javax.swing.*;
 
 public class myJFrame extends JFrame {
+    private Image dbImage;
+    private Graphics dbg;
+    
 
     public myJFrame() {
         super("Berkey Creamery");
