@@ -28,8 +28,8 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
         setLayout(null);
         addMouseMotionListener(this);
         flavorMoveT = new Timer(10,this);
-        flavorT = new Timer(10, this);
-        gameT = new Timer(1000, this);
+        flavorT = new Timer(100, this);
+        gameT = new Timer(1000, this); //Used for actual game timing (displayed in top left corner
     }
 
     // starts game loops
@@ -43,7 +43,7 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
         
         scoreMult = (gameOpt.speed * 1.5 + gameOpt.flavors * 1.5);
         
-        cone = new coneSprite();
+        cone = new coneSprite(gameOpt.muted);
         add(cone);
         cone.init(this.getWidth()/2, getParent().getHeight()-cone.height-300);
         topSprite = cone;
@@ -153,6 +153,8 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
         System.out.println("xa1=" + xa1 + " xa2=" + xa2 + "xb1=" + xb1 + " xb2=" + xb2);
         System.out.println(i);
         System.out.println(test);
+        System.out.println(flavor.imagePath);
+        cone.addStuckFlavor(flavor.imagePath);
         return (test > 95);
     }
     
