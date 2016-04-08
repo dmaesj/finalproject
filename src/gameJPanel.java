@@ -28,7 +28,7 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
         setLayout(null);
         addMouseMotionListener(this);
         flavorMoveT = new Timer(10,this);
-        flavorT = new Timer(100, this);
+        flavorT = new Timer(10, this);
         gameT = new Timer(1000, this); //Used for actual game timing (displayed in top left corner
     }
 
@@ -146,6 +146,22 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
         }
     }
     
+      public void moveCaught() {
+        for (Component c : this.getComponents()) {
+            if (c instanceof flavorSprite) {
+                if (((flavorSprite) c).caught) {
+                    ((flavorSprite) c).setPosition(cone.x, topSprite.y + 30);
+                }
+            }
+        }
+        /*for (int x = 0; x < caughtCount; x++) {
+            System.out.println("caughtCount: " + caughtCount);
+            if (flavor[x].caught) {
+                    flavor[x].setPosition(cone.x, topSprite.y + 30);
+                }
+        }*/
+    }
+    
     public boolean collision(int xa1, int xb1,int xa2, int xb2){
         int i = Math.abs( Math.min( (xa2+xa1), (xb2+xb1) ) - Math.max(xa1, xb1) );
         int test = (int) ( ( (  xa2+xb2-i ) / i) * 100.0f ) ;
@@ -153,8 +169,6 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
         System.out.println("xa1=" + xa1 + " xa2=" + xa2 + "xb1=" + xb1 + " xb2=" + xb2);
         System.out.println(i);
         System.out.println(test);
-        System.out.println(flavor.imagePath);
-        cone.addStuckFlavor(flavor.imagePath);
         return (test > 95);
     }
     
@@ -220,6 +234,7 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
         Point pt = evt.getPoint();
         int x = pt.x;
         cone.moveX(x);
+        moveCaught();
     }
     
     @Override
@@ -228,5 +243,6 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
         Point pt = evt.getPoint();
         int x = pt.x;
         cone.moveX(x);
+        moveCaught();
     }
 }
