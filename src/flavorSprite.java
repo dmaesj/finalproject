@@ -22,19 +22,6 @@ public class flavorSprite extends sprite {
             Logger.getLogger(flavorSprite.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     public flavorSprite(boolean inMuted, String inPath) {
-        super();
-        muted = inMuted;
-        flavorDrop = new soundPlayer();
-        flavorMiss = new soundPlayer();
-        this.setImage(inPath);
-        try {
-            flavorDrop.setIStream("sounds/drop.wav");
-            flavorMiss.setIStream("sounds/miss.wav");
-        } catch (IOException ex) {
-            Logger.getLogger(flavorSprite.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
 
     public void setFlavor(int i, int pWidth, int pHeight) {

@@ -36,9 +36,4 @@ public class coneSprite extends sprite{
         this.x = this.getBounds().x;
         
     }
-    public void addStuckFlavor(String inPath) {
-        stuck[stuckCount++] = new flavorSprite(muted, inPath);
-        System.out.println("in addStuckFlavor");
-        System.out.println("stuckCount is: " + stuckCount);
-    }
 }
