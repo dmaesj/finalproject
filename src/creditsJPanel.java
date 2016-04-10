@@ -9,7 +9,7 @@ public class creditsJPanel extends JPanel {
     public creditsJPanel() {
         super();
         bTemp = new JButton();
-        bTemp.setText("Credits Panel");
+        bTemp.setText("CREDITS \n Adam Fedor \n Daniel Maes \n Eric Ruppert \n Jessica Spiegelblatt");
         add(bTemp);
     }
 }
