@@ -118,6 +118,7 @@ public class myJPanel extends JPanel implements ActionListener, ChangeListener {
         }
 
         if (obj == menuP.bOptions) {
+            gameOptions.getOptions();
             mBarP.setVisButtons(2);
             switchPanel("options");
         }
@@ -140,13 +141,13 @@ public class myJPanel extends JPanel implements ActionListener, ChangeListener {
             mBarP.bSound.setAltImage();
             optionsP.bSound.setAltImage();
         }
-        if (obj == optionsP.jrbNormal) {
+        if (obj == optionsP.jrbEasy) {
             gameOptions.setMode(1);
         }
-        if (obj == optionsP.jrbSurvival) {
+        if (obj == optionsP.jrbNormal) {
             gameOptions.setMode(2);
         }
-        if (obj == optionsP.jrbMarathon) {
+        if (obj == optionsP.jrbHard) {
             gameOptions.setMode(3);
         }
     }

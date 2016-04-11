@@ -17,7 +17,7 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
     flavorSprite flavor;
     
     int flavorCount = 0, flavorDelay = 200, flavorWait = 0, lives, score = 0, time, 
-            misses = 0, addSpeed = 0;
+            addSpeed = 0, flavorsCaught = 0;
     double scoreMult = 1d;
     Timer flavorT, gameT, flavorMoveT;
     JTextArea stats;
@@ -34,35 +34,33 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
 
     // starts game loops
     public void gameStart() {
+         switch (gameOpt.mode) {
+                    case 1: // Easy mode
+                        flavorDelay = 250;
+                        scoreMult = 2d;
+                        break;
+                    case 2: // Normal mode
+                        flavorDelay = 200;
+                        scoreMult = 5d;
+                        break;
+                    case 3: // Hard mode
+                        flavorDelay = 150;
+                        scoreMult = 8d;
+                        break;
+                }
+         
         gameKill = false;
-        time = 0;
         
         stats = new JTextArea();
         stats.setBackground(Color.WHITE);
         stats.setBounds(0, 0, 300, 20);
         
-        scoreMult = (gameOpt.speed * 1.5 + gameOpt.flavors * 1.5);
-        
+        scoreMult += (gameOpt.speed * 1.5 + gameOpt.flavors * 1.5);
         cone = new coneSprite(gameOpt.muted);
         add(cone);
         cone.init(this.getWidth()/2, getParent().getHeight()-cone.height-300);
         topSprite = cone;
         add(stats);
-        switch (gameOpt.mode) {
-            case 1: {
-                gameNormal();
-                break;
-            }
-            case 2: {
-                gameMarathon();
-                time = 300;
-                break;
-            }
-            case 3: {
-                gameSurvival();
-                break;
-            }
-        }
         
         flavorMoveT.start();
         flavorT.start();
@@ -85,22 +83,11 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
         flavorT.stop();
         gameT.stop();
         gameKill = true;
-    }
-
-    //Normal Game Loop
-    public void gameNormal() { 
-    // timer count up until level complete, match random order of scoops to finish level, base speed increases each level
-    }
-
-    //Marathon Game Loop
-    public void gameMarathon() {
-        // Timer countdown, unlimited lives, score based on scoops caught
-    }
-
-    //Survival Game Loop
-    public void gameSurvival() {
-        // No visible timer, score based on time alive, scoops caught, if a scoop is missed you lose
-        // once scoops hit top, clear cones and continue, gets progressively faster
+        flavorCount = 0;
+        flavorWait = 0;
+        lives = 5;
+        score = 0; 
+        flavorsCaught = 0;
     }
     
     public void addFlavor() {
@@ -113,7 +100,6 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
             flavor = new flavorSprite(gameOpt.muted);
             flavor.setFlavor(flavorColor, this.getWidth(), this.getHeight());
             flavor.speed += (gameOpt.speed * 2) + addSpeed;
-            //System.out.println(flavor.speed + "");
             add(flavor); 
             flavorWait = 0;
             flavorDelay = ((int) Math.round(Math.random() * 20)) * 10;
@@ -140,6 +126,8 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
                     if (collision(xa1, xa2, xb1, xb2)) {
                         ((flavorSprite) c).caught = true;
                         topSprite = ((flavorSprite) c);
+                        score += (5 * scoreMult);
+                        flavorsCaught++;
                     }
                 }
             }
@@ -192,7 +180,7 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
 
     
     public void updateTime() {
-        switch (gameOpt.mode) {
+        /*switch (gameOpt.mode) {
                     case 1: // Normal mode
                         time++;
                         stats.setText("Score: " + score + "     Elapsed Time: " + getTime());
@@ -209,7 +197,8 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
                             addSpeed++;
                         }   
                         break;
-                }
+                }*/
+        stats.setText("Score: " + score + "     Caught: " + flavorsCaught + "     Elapsed Time: " + getTime());
     }
     
     @Override
@@ -220,6 +209,7 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
                     addFlavor();
             }
             if (obj == gameT) {
+                time++;
                 updateTime();
             }
             if (obj == flavorMoveT) {

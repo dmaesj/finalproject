@@ -5,11 +5,14 @@ import java.awt.*;
 public class scoresJPanel extends JPanel {
 
     JButton bTemp;
+    scoreKeeper score;
 
     public scoresJPanel() {
         super();
         bTemp = new JButton();
-        bTemp.setText("Scores Panel");
+        score = new scoreKeeper();
+        score.getHighScores();
+        bTemp.setText("stuff");
         add(bTemp);
     }
 }
