@@ -1,6 +1,7 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,9 +15,9 @@ import java.io.IOException;
  */
 public class scoreKeeper {
     String[] nameList = new String[10];
-    double[] scoreList = new double[10];
-    String blank = "Name: ------- Date: ------ Score: ---";
-    double blankScore = 0d;
+    int[] scoreList = new int[10];
+    String blank = "Name: ------- Date: ------";
+    int blankScore = 0;
     int MAX_SCORES_SAVED = 10;
     String saveFile = "HighScores.xml";
     
@@ -37,10 +38,7 @@ public class scoreKeeper {
         xr.openWriterXML(saveFile);
         for (int x = 0; x < MAX_SCORES_SAVED; x++) {
             xr.writeObject(blank);
-        }
-         for (int x = 0; x < MAX_SCORES_SAVED; x++) {
             xr.writeObject(blankScore);
-            System.out.println("writing: " + blankScore);
         }
         xr.closeWriterXML();
     }
@@ -55,26 +53,34 @@ public class scoreKeeper {
         for (int x = 0; x < MAX_SCORES_SAVED; x++) {
             nameList[x] = new String();
             nameList[x] = (String) xr.ReadObject();
-            System.out.println(x + ": " + nameList[x]);
+            scoreList[x] = (int) xr.ReadObject();
+            System.out.println(x + ": " + nameList[x] + " Score: " + scoreList[x]);
         }
-        /*for (int x = 0; x < MAX_SCORES_SAVED; x++) {
-            scoreList[x] = (double) xr.ReadObject();
-            System.out.println("" + scoreList[x]);
-        }*/
         xr.closeReaderXML();
     }
         
     
-    public void setNewScore() {
+    public void setNewScore(String inName, int tempScore) {
         XML_240 xr = new XML_240();
         getHighScores();
-        String tempSave;
+        String tempName = ("Name: " + inName.toUpperCase() + " Date: " + LocalDateTime.now().toLocalDate());
+        int writeCount = 0, x = 0;
         xr.openWriterXML(saveFile);
-        for (int x = 0; x < MAX_SCORES_SAVED; x++) {
-            tempSave = nameList[x];
-            
-            xr.writeObject(nameList[x]);
-        }
+        do {
+            if (tempScore >= scoreList[x]) {
+                xr.writeObject(tempName);
+                xr.writeObject(tempScore);
+                writeCount++;
+                tempScore = scoreList[x];
+                tempName = nameList[x];
+            }
+            else {
+                xr.writeObject(nameList[x]);
+                xr.writeObject(scoreList[x]);
+                writeCount++;
+            }
+            x++;
+        } while (writeCount < MAX_SCORES_SAVED);
         xr.closeWriterXML();
     }
     

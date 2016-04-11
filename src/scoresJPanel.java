@@ -12,7 +12,7 @@ public class scoresJPanel extends JPanel {
         bTemp = new JButton();
         score = new scoreKeeper();
         score.getHighScores();
-        score.setNewScore();
+        score.setNewScore("ADAM", 100);
         bTemp.setText("stuff");
         add(bTemp);
     }
