@@ -13,8 +13,10 @@ import java.io.IOException;
  * @author Adam
  */
 public class scoreKeeper {
-    String[] scoresList;
+    String[] nameList = new String[10];
+    double[] scoreList = new double[10];
     String blank = "Name: ------- Date: ------ Score: ---";
+    double blankScore = 0d;
     int MAX_SCORES_SAVED = 10;
     String saveFile = "HighScores.xml";
     
@@ -33,8 +35,12 @@ public class scoreKeeper {
     public void setBlank() {
         XML_240 xr = new XML_240();
         xr.openWriterXML(saveFile);
-        for (int x = 0; x < 10; x++) {
+        for (int x = 0; x < MAX_SCORES_SAVED; x++) {
             xr.writeObject(blank);
+        }
+         for (int x = 0; x < MAX_SCORES_SAVED; x++) {
+            xr.writeObject(blankScore);
+            System.out.println("writing: " + blankScore);
         }
         xr.closeWriterXML();
     }
@@ -44,23 +50,32 @@ public class scoreKeeper {
     }
     
     public void getHighScores() {
-        int x = 0;
         XML_240 xr = new XML_240();
         xr.openReaderXML(saveFile);
-        /*while ((boolean) xr.ReadObject()); {
-        scoresList[x] = (String) xr.ReadObject();
-        System.out.println(scoresList[x]);
-        x++;*/
+        for (int x = 0; x < MAX_SCORES_SAVED; x++) {
+            nameList[x] = new String();
+            nameList[x] = (String) xr.ReadObject();
+            System.out.println(x + ": " + nameList[x]);
+        }
+        /*for (int x = 0; x < MAX_SCORES_SAVED; x++) {
+            scoreList[x] = (double) xr.ReadObject();
+            System.out.println("" + scoreList[x]);
+        }*/
+        xr.closeReaderXML();
     }
         
     
     public void setNewScore() {
         XML_240 xr = new XML_240();
-        xr.openReaderXML(saveFile);
+        getHighScores();
+        String tempSave;
+        xr.openWriterXML(saveFile);
         for (int x = 0; x < MAX_SCORES_SAVED; x++) {
-            scoresList[x] = (String) xr.ReadObject();
-            System.out.println(scoresList[x]);
+            tempSave = nameList[x];
+            
+            xr.writeObject(nameList[x]);
         }
-        
+        xr.closeWriterXML();
     }
+    
 }
