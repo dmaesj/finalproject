@@ -14,6 +14,7 @@ public class myJPanel extends JPanel implements ActionListener, ChangeListener {
     menuJPanel menuP;
     menuBarJPanel mBarP;
     options gameOptions;
+    scoreKeeper scores;
 
     public myJPanel() {
         super();
@@ -21,13 +22,14 @@ public class myJPanel extends JPanel implements ActionListener, ChangeListener {
         //Initialize Options
         gameOptions = new options();
         gameOptions.getOptions();
+        scores = new scoreKeeper();
 
         //Initialize Panels        
         instP = new instJPanel();
-        scoresP = new scoresJPanel();
+        scoresP = new scoresJPanel(scores);
         creditsP = new creditsJPanel();
         optionsP = new optionsJPanel(gameOptions);
-        gameP = new gameJPanel(gameOptions);
+        gameP = new gameJPanel(gameOptions, scores);
         menuP = new menuJPanel();
         mBarP = new menuBarJPanel(gameOptions);
 

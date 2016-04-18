@@ -23,7 +23,7 @@ public class scoreKeeper {
     
     
     scoreKeeper() {
-         File f = new File(saveFile);
+        File f = new File(saveFile);
         if(!f.exists()) {
             try {
                 f.createNewFile();
@@ -47,16 +47,19 @@ public class scoreKeeper {
       
     }
     
-    public void getHighScores() {
+    public String getHighScores() {
         XML_240 xr = new XML_240();
         xr.openReaderXML(saveFile);
+        String returnList = ""; 
         for (int x = 0; x < MAX_SCORES_SAVED; x++) {
             nameList[x] = new String();
             nameList[x] = (String) xr.ReadObject();
             scoreList[x] = (int) xr.ReadObject();
-            System.out.println(x + ": " + nameList[x] + " Score: " + scoreList[x]);
+            returnList+=(x + ": " + nameList[x] + " Score: " + scoreList[x] + "\n");
         }
+        //System.out.print(returnList);
         xr.closeReaderXML();
+        return returnList;
     }
         
     

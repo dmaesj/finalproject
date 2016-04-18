@@ -4,16 +4,17 @@ import java.awt.*;
 
 public class scoresJPanel extends JPanel {
 
-    JButton bTemp;
-    scoreKeeper score;
+    scoreKeeper scores;
+    JTextArea JScores;
+    int fontSize = 16;
 
-    public scoresJPanel() {
+    public scoresJPanel(scoreKeeper inScores) {
         super();
-        bTemp = new JButton();
-        score = new scoreKeeper();
-        score.getHighScores();
-        score.setNewScore("ADAM", 100);
-        bTemp.setText("stuff");
-        add(bTemp);
+        scores = inScores;
+        JScores = new JTextArea();
+        JScores.setBackground(Color.LIGHT_GRAY);
+        JScores.setFont(new Font(Font.MONOSPACED, Font.BOLD, fontSize));
+        JScores.setText(scores.getHighScores());
+        add(JScores);
     }
 }

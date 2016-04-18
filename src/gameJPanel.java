@@ -15,6 +15,7 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
     options gameOpt;
     coneSprite cone;
     flavorSprite flavor;
+    scoreKeeper scores;
     
     int flavorCount = 0, flavorDelay = 200, flavorWait = 0, lives, score = 0, time, 
             addSpeed = 0, flavorsCaught = 0;
@@ -22,9 +23,10 @@ public class gameJPanel extends JPanel implements MouseMotionListener, ActionLis
     Timer flavorT, gameT, flavorMoveT;
     JTextArea stats;
     
-    public gameJPanel(options inOpt) {
+    public gameJPanel(options inOpt, scoreKeeper inScores) {
         super();
         gameOpt = inOpt;
+        scores = inScores;
         setLayout(null);
         addMouseMotionListener(this);
         flavorMoveT = new Timer(10,this);
